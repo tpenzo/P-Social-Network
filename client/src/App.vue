@@ -8,8 +8,7 @@
 <template>
     <div className="bg-[#F3F2EF] h-screen overflow-y-scroll md:space-y-6">
         <Header/>
-        <Home/>
-        <!-- <Profile/> -->
+        <router-view></router-view>
     </div>
 </template>
 
