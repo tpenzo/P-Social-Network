@@ -22,7 +22,12 @@ const router = createRouter({
 // Private router
 router.beforeEach(async (to, from) => {
    const auth = AuthStore();
-   if (!auth.token && to.name !== 'login-page') {
+   if (
+      !auth.token &&
+      to.name !== 'login-page' &&
+      to.name !== 'register-page' &&
+      to.name !== 'notfound-page'
+   ) {
       return { name: 'login-page' };
    }
 });

@@ -1,23 +1,24 @@
 <template>
-   <main class="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">
-	<h1 class="text-9xl font-extrabold text-white tracking-widest">404</h1>
-	<div class="bg-[#FF6A3D] px-2 text-sm rounded rotate-12 absolute">
-		Page Not Found
-	</div>
-	<button class="mt-5">
-      <a
-        class="relative inline-block text-sm font-medium text-[#FF6A3D] group active:text-orange-500 focus:outline-none focus:ring"
-      >
-        <span
-          class="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-[#FF6A3D] group-hover:translate-y-0 group-hover:translate-x-0"
-        ></span>
+<!-- This is an example component -->
+<div class="h-screen w-screen bg-gray-50 flex items-center">
+  <div class="container flex flex-col md:flex-row items-center justify-between px-5 text-gray-700">
+    <div class="w-full lg:w-1/2 mx-8">
+      <div class="text-7xl text-green-500 font-dark font-extrabold mb-8"> 404</div>
+      <p class="text-2xl md:text-3xl font-light leading-normal mb-8">
+        Sorry we couldn't find the page you're looking for
+      </p>
 
-        <span class="relative block px-8 py-3 bg-[#1A2238] border border-current">
-          <router-link to="/">Go Home</router-link>
-        </span>
-      </a>
-    </button>
-</main>
+      <a href="#"
+        class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700">back
+        to homepage</a>
+    </div>
+    <div class="w-full lg:flex lg:justify-end lg:w-1/2 mx-5 my-12">
+      <img src="https://user-images.githubusercontent.com/43953425/166269493-acd08ccb-4df3-4474-95c7-ad1034d3c070.svg"
+        class="" alt="Page not found">
+    </div>
+
+  </div>
+</div>
 </template>
 <script></script>
 <style></style>
