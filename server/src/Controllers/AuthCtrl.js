@@ -22,8 +22,8 @@ class AuthCtrl {
                );
                res.cookie('refreshToken', refreshToken, {
                   httpOnly: true,
-                  secure: false,
-                  sameStime: 'strict',
+                  // secure: false,
+                  // sameStime: 'strict',
                   path: '/auth/refresh_token',
                   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
                });
@@ -45,9 +45,13 @@ class AuthCtrl {
    }
 
    // [GET] .../api/auth/logout
-   logout(req, res) {
+   async logout(req, res) {
       try {
-      } catch (error) {}
+         res.clearCookie('refreshToken');
+         return res.status(200).json({ message: 'Logout success' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
    }
 
    // [POST] .../api/auth/register
@@ -73,7 +77,7 @@ class AuthCtrl {
 
    // [GET] .../api/auth/refreshtoken
    refresh_token(req, res) {
-      res.send('This is login page');
+      res.send('This is refresh token');
    }
 }
 

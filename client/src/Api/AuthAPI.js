@@ -30,3 +30,19 @@ export const loginAPI = async (userLogin) => {
       alert.alertError(error.response.data.message);
    }
 };
+
+export const logout = async () => {
+   try {
+      // Loading
+      alert.alertLoading();
+      // Call API and resert AuthStore
+      const res = await axiosClient.get('api/auth/logout');
+      auth.resert();
+      // Success
+      alert.alertSuccess(res.message);
+   } catch (error) {
+      alert.alertError(error.response.data.message);
+   }
+};
+
+export const refreshToken = async () => {};

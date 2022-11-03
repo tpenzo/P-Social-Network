@@ -7,5 +7,8 @@ export const AuthStore = defineStore('authStore', {
          this.user = user;
          this.token = token;
       },
+      resert() {
+         (this.token = null), (this.user = null);
+      },
    },
 });

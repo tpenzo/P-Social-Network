@@ -1,3 +1,18 @@
+<script setup>
+    import { ref } from 'vue'
+    import { logout } from '../Api/AuthAPI.js';
+    import { useRouter } from 'vue-router'
+    
+    const router = useRouter()
+
+    const showDropdown = ref(false)
+
+    const handleLogout = async () => {
+        logout()
+        showDropdown.value = false
+        router.push({name: 'login-page'})
+    }
+</script>
 <template>
     <header className="sticky top-0 z-40 bg-white flex items-center justify-around py-1.5 px-3 focus-within:shadow-lg">
         <div className="flex items-center space-x-2 w-full max-w-xs">
@@ -17,7 +32,7 @@
                         </div>
                         <input type="text" id="voice-search"
                             class="rounded-[10px] bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                            placeholder="Search" required="">
+                            placeholder="Search">
                     </div>
                 </form>
                 <!-- Search result -->
@@ -62,13 +77,13 @@
             </div>
             <div class="inline relative drop-shadow-lg">
                 <!-- Btn show -->
-                <button
+                <button @click="showDropdown = !showDropdown"
                     class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border rounded-md focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
                     <span class="mx-1">Jane Doe</span>
                     <img class="inline ml-1" src="@/assets/images/down-chevron.png" width="15" />
                 </button>
                 <!-- Show info -->
-                <div v-show="false"
+                <div v-show="showDropdown"
                     class="absolute drop-shadow-lg right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
                     <a href="#"
                         class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform hover:bg-gray-100">
@@ -84,51 +99,47 @@
                     <hr class="border-gray-200">
     
                     <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform">
+                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         view profile
                     </a>
     
                     <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform">
+                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         Settings
                     </a>
     
                     <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform">
+                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         Keyboard shortcuts
                     </a>
     
                     <hr class="border-gray-200">
     
                     <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform">
+                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         Company profile
                     </a>
     
                     <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform">
+                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         Team
                     </a>
     
                     <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform">
+                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transformhover:bg-gray-100 hover:bg-gray-100">
                         Invite colleagues
                     </a>
     
                     <hr class="border-gray-200">
     
-                    <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform">
+                    <button  href="#" @click="handleLogout()"
+                        class=" block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         Sign Out
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 </template>
-<script>
 
-</script>
-<style>
-    
-</style>
+<style></style>
