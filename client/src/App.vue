@@ -1,7 +1,6 @@
 <script setup>
     import Header from './Components/Header.vue'
     import Alert from './Components/Alert/Alert.vue';
-    
 </script>
 
 <template>

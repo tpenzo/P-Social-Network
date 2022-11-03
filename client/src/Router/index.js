@@ -4,7 +4,7 @@ import Notfound from '../pages/Notfound.vue';
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
 import Profile from '../pages/Profile.vue';
-import { AuthStore } from '../stores/AuthStore';
+import { auth } from '../main.js';
 
 const routes = [
    { path: '/', name: 'home-page', component: Home },
@@ -21,7 +21,7 @@ const router = createRouter({
 
 // Private router
 router.beforeEach(async (to, from) => {
-   const auth = AuthStore();
+   console.log(auth.token);
    if (
       !auth.token &&
       to.name !== 'login-page' &&

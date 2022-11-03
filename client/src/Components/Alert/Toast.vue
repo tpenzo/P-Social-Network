@@ -22,7 +22,7 @@
     .toast {
         z-index: 2;
         position: fixed;
-        bottom: 50px;
-        right: 10px;
+        top: 90px;
+        right: 30px;
     }
 </style>

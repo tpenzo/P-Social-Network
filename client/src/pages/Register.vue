@@ -1,11 +1,20 @@
 <script setup>
-    import { reactive, watch } from 'vue'
+    import { reactive, watchEffect } from 'vue'
+    import { useRouter } from 'vue-router';
     import { Field, Form, ErrorMessage } from 'vee-validate'
     import * as yup from 'yup'
     import { registerAPI } from '../Api/AuthAPI.js'
+    import { auth } from '../main.js'
     
-    const userRegis = reactive({ firstname: '', lastname: '',  username: '', password: '', email: ''})
+    const router = useRouter()
+    const userRegis = reactive({ firstname: '', lastname: '', username: '', password: '', email: '' })
     
+    watchEffect(() => {
+        if(auth.token){
+            router.push({name: 'home-page'})
+        }
+    })
+
     const formRegValidation = yup.object().shape({
         firstname: yup
             .string()
@@ -19,19 +28,25 @@
             .max(25, 'The maximum length of the data field is 25 characters.'),
         email: yup
             .string()
-            .required("The username must have a value.")
+            .required("The email must have a value.")
             .email("This is field email"),
         password: yup
             .string()
-            .required("The username must have a value."),
+            .required("The password must have a value."),
         confirmPassword: yup
             .string()
-            .required("The username must have a value.")
-            .equals([yup.ref('password')], "The confirmPassword not match")
+            .required("The confirm password must have a value.")
+            .equals([yup.ref('password')], "The confirm password not match")
     })
 
     const handleSubmit = () => {
         registerAPI(userRegis)
+        userRegis.firstname = ''
+        userRegis.lastname = ''
+        userRegis.username = '',
+        userRegis.password = '', 
+        userRegis.email = ''
+        router.push({name: 'login-page'})
     }
 
 </script>

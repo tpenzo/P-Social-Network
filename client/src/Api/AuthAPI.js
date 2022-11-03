@@ -1,6 +1,6 @@
 // import axios from 'axios';
 import { alert } from '../main.js';
-import axios from 'axios';
+import { auth } from '../main.js';
 import axiosClient from './axiosClient.js';
 
 export const registerAPI = async (userRegis) => {
@@ -9,6 +9,21 @@ export const registerAPI = async (userRegis) => {
       alert.alertLoading();
       // Call API
       const res = await axiosClient.post('api/auth/register', userRegis);
+      // Success
+      alert.alertSuccess(res.message);
+   } catch (error) {
+      alert.alertError(error.response.data.message);
+   }
+};
+
+export const loginAPI = async (userLogin) => {
+   try {
+      // Loading
+      alert.alertLoading();
+      // Call API
+      const res = await axiosClient.post('api/auth/login', userLogin);
+      // Set data user login
+      auth.authSaveData(res.user, res.accessToken);
       // Success
       alert.alertSuccess(res.message);
    } catch (error) {

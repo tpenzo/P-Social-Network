@@ -1,23 +1,37 @@
 import UserModel from '../Models/User.js';
 import bcrypt from 'bcrypt';
+import token from '../middlewares/Token.js';
 
 class AuthCtrl {
-   // [GET] .../api/auth/login
+   // [POST] .../api/auth/login
    async login(req, res) {
       try {
          const user = await UserModel.findOne({ username: req.body.username });
          if (user) {
             // Check password
-            const match = bcrypt.compare(req.body.password, user.password);
+            const match = await bcrypt.compare(req.body.password, user.password);
             if (match) {
                // Create token and store refresh_token in cookie
-
+               const accessToken = token.access(
+                  { _id: user._id, role: user.role },
+                  '500s'
+               );
+               const refreshToken = token.refresh(
+                  { _id: user._id, role: user.role },
+                  '500s'
+               );
+               res.cookie('refreshToken', refreshToken, {
+                  httpOnly: true,
+                  secure: false,
+                  sameStime: 'strict',
+                  path: '/auth/refresh_token',
+                  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+               });
                // Handle user for return
-
                return res.status(200).json({
                   message: 'Login Success',
                   user,
-                  accessToken: 'This is token for you',
+                  accessToken,
                });
             } else {
                return res.status(403).json({ message: 'Incorrect password' });
