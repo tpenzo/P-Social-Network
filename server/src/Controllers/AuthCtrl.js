@@ -1,5 +1,5 @@
-import UserModel from '../Models/User.js';
 import bcrypt from 'bcrypt';
+import UserModel from '../Models/User.js';
 import token from '../middlewares/Token.js';
 
 class AuthCtrl {

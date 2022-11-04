@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from '../main';
 
 const axiosClient = axios.create({
    headers: {
@@ -7,6 +8,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
+   config.headers.token = `Bearer ${auth.token}`;
    return config;
 });
 
