@@ -11,7 +11,7 @@ const app = express();
 
 // SETUP Server
 dotenv.config();
-morgan('tiny');
+app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ extended: true }));

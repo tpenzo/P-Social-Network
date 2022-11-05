@@ -24,6 +24,25 @@ class Token {
          return res.status(401).json("You're not authenticated");
       }
    }
+   async verifyToken(req, res, next) {
+      try {
+         let token = req.headers.token;
+         if (token) {
+            token = token.split(' ')[1];
+            jwt.verify(token, process.env.PRIVATE_KEY, (err, user) => {
+               if (err) {
+                  return res.status(403).json({ message: err.message });
+               }
+               req.uerLogin = user;
+               next();
+            });
+         } else {
+            return res.status(401).json({ message: "You're not authenticated" });
+         }
+      } catch (error) {
+         return res.status(500).json({ message: error.message });
+      }
+   }
 }
 
 export default new Token();

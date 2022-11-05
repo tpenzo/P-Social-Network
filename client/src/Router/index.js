@@ -8,7 +8,7 @@ import { auth } from '../main.js';
 
 const routes = [
    { path: '/', name: 'home-page', component: Home },
-   { path: '/profile', name: 'profile-page', component: Profile },
+   { path: '/profile/:_id', name: 'profile-page', component: Profile },
    { path: '/login', name: 'login-page', component: Login },
    { path: '/register', name: 'register-page', component: Register },
    { path: '/:pathMatch(.*)*', name: 'notfound-page', component: Notfound },

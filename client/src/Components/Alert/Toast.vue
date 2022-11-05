@@ -1,9 +1,18 @@
 <script setup>
-    import { defineProps } from 'vue'
+    import { alert } from '../../main';
+    import { defineProps, watchEffect } from 'vue'
+    
     const props = defineProps({
         typeMessage: String,
         message: String,
     })
+
+    watchEffect(()=>{
+        setTimeout(() => {
+            alert.refreshAlert()
+        }, 3000)
+    })
+
 </script>
 <template>
     <div :class="typeMessage === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'"  class="toast flex rounded-lg  p-4 mb-4 text-sm" role="alert">
@@ -15,6 +24,9 @@
         <div>
             <span class="font-medium">{{ typeMessage }} alert !</span> {{message}}.
         </div>
+        <div @click="alert.refreshAlert()" class=" ml-[10px] hover:cursor-pointer">
+            <img src="../../assets/images/cross.png" width="25">
+        </div>
     </div>
 </template>
 
@@ -22,7 +34,7 @@
     .toast {
         z-index: 2;
         position: fixed;
-        top: 90px;
+        top: 80px;
         right: 30px;
     }
 </style>

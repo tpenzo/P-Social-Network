@@ -25,7 +25,7 @@
 
 <template>
 <div>
-    <Form @submit="handleLogin()" :validation-schema="formLoginValidation" class="flex bg-white rounded-lg shadow-2xl overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
+    <Form @submit="handleLogin()" :validation-schema="formLoginValidation" class="mt-[150px] flex bg-white rounded-lg shadow-2xl overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
         <div class="hidden lg:block lg:w-1/2 bg-cover"
             style="background-image:url('https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHNvY2lhbCUyMG1lZGlhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=80')">
         </div>

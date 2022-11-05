@@ -1,4 +1,25 @@
 <script setup>
+    import { auth } from '../main';
+    import { watchEffect, reactive } from 'vue'
+    import { useRoute } from 'vue-router'
+    import { profile } from '../main.js';
+    import { getProfileUser } from '../Api/ProfileAPI.js';
+    
+    const route = useRoute()
+
+    const infoUser = reactive({data: null})
+    
+    watchEffect(async () => {
+        console.log(route.params._id)
+        if (route.params._id === auth.user._id){
+            infoUser.data = auth.user 
+        } else if (route.params._id === profile.user?._id){
+            infoUser.data = profile.user
+        } else{
+            await getProfileUser(route.params._id)
+            infoUser.data = profile.user
+        }
+    })
     
 </script>
 
@@ -10,7 +31,7 @@
             <img class="mt-[100px] z-10 h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
                 alt="">
-            <p class="font-semibold">John Doe</p>
+            <p class="font-semibold">{{ infoUser.data?.username }}</p>
             <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
                 <svg viewBox="0 0 24 24" class="mr-1" width="16" height="16" stroke="currentColor" stroke-width="2"
                     fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -48,7 +69,7 @@
                 </a>
                 <!-- Username -->
                 <span class="text-xs text-gray-500">
-                    Sage
+                    Lee Min Ho
                 </span>
             </li>
     
@@ -130,6 +151,4 @@
     </div>
 </template>
 
-<style>
-    
-</style>
+<style></style>

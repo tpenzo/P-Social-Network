@@ -17,7 +17,9 @@ export const AlertStore = defineStore('alertStore', {
          this.success = txtSuccess;
       },
       refreshAlert() {
-         this.data = data;
+         this.loading = false;
+         this.error = null;
+         this.success = null;
       },
    },
 });

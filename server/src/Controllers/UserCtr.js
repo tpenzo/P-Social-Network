@@ -12,6 +12,19 @@ class UserCtr {
          return res.status(500).json({ message: error.message, error });
       }
    }
+   // [GET] api/user/:_id
+   async getUser(req, res) {
+      try {
+         const user = await UserModel.findById(req.params._id).select('-password');
+         if (user) {
+            return res.status(200).json({ message: 'successful', user });
+         } else {
+            return res.status(400).json({ message: 'User does not exist' });
+         }
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
 }
 
 export default new UserCtr();

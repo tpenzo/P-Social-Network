@@ -3,6 +3,7 @@
     import { logout } from '../Api/AuthAPI.js';
     import { useRouter } from 'vue-router'
     import Search from './Search.vue'
+    import { auth } from '../main';
     
     const router = useRouter()
 
@@ -13,6 +14,7 @@
         showDropdown.value = false
         router.push({name: 'login-page'})
     }
+
 </script>
 <template>
     <header className="sticky top-0 z-40 bg-white flex items-center justify-around py-1.5 px-3 focus-within:shadow-lg">
@@ -63,11 +65,10 @@
     
                     <hr class="border-gray-200">
     
-                    <a href="#"
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
+                    <router-link :to="{ name: 'profile-page', params: { _id: auth.user._id } }" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         view profile
-                    </a>
-    
+                    </router-link>
+
                     <a href="#"
                         class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         Settings
