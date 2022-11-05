@@ -65,7 +65,7 @@
     
                     <hr class="border-gray-200">
     
-                    <router-link :to="{ name: 'profile-page', params: { _id: auth.user._id } }" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
+                    <router-link @click="showDropdown = !showDropdown" :to="{ name: 'profile-page', params: { _id: auth.user._id } }" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         view profile
                     </router-link>
 

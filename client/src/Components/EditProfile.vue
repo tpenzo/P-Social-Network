@@ -1,5 +1,7 @@
 <script setup>
-import { Form, Field, ErrorMessage } from 'vee-validate'
+    import { defineEmits } from 'vue'
+    import { Form, Field, ErrorMessage } from 'vee-validate'
+    const emit = defineEmits(['update:activeEdit'])
 </script>
 
 <template>
@@ -61,10 +63,14 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
             <ErrorMessage class="text-red-500 text-[13px]" name="gender" />
         </div>
        <div class="mt-3 relative h-[35px]">
-            <button class="absolute right-0 flex items-center py-2 px-4 rounded-lg text-sm bg-yellow-300 shadow-lg">
-                Edit
-                <img src="@/assets/images/send.png" class="ml-1" width="25">
-            </button>
+            <div class="absolute right-0 flex items-center">
+                <button class="flex items-center py-2 px-4 rounded-lg text-sm bg-yellow-300 shadow-lg">
+                    Edit
+                </button>
+                <button @click="emit('update:activeEdit', false)" class="flex items-center py-2 px-4 rounded-lg text-sm bg-gray-500 text-white shadow-lg ml-[10px]">
+                    Cancel
+                </button>
+            </div>
        </div>
     </Form>
 </div>
@@ -78,7 +84,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
     width: 100%;
     height: 100%;
     background: #0008;
-    z-index: 9;
+    z-index: 99;
     overflow: auto;
 }
 .edit_profile form {

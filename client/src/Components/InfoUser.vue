@@ -6,23 +6,23 @@
     import { getProfileUser } from '../Api/ProfileAPI.js';
     import  EditProfile  from './EditProfile.vue'
     
-    // const route = useRoute()
+    const route = useRoute()
 
-    // const infoUser = reactive({data: null})
+    const infoUser = reactive({data: null})
     
-    // watchEffect(async () => {
-    //     console.log(route.params._id)
-    //     if (route.params._id === auth.user._id){
-    //         infoUser.data = auth.user 
-    //     } else if (route.params._id === profile.user?._id){
-    //         infoUser.data = profile.user
-    //     } else{
-    //         await getProfileUser(route.params._id)
-    //         infoUser.data = profile.user
-    //     }
-    // })
+    watchEffect(async () => {
+        console.log(route.params._id)
+        if (route.params._id === auth.user._id){
+            infoUser.data = auth.user 
+        } else if (route.params._id === profile.user?._id){
+            infoUser.data = profile.user
+        } else{
+            await getProfileUser(route.params._id)
+            infoUser.data = profile.user
+        }
+    })
 
-    const isEdit = ref(false)
+    const activeEdit = ref(false)
 
     
 </script>
@@ -33,10 +33,10 @@
             <img class="rounded-lg absolute w-full h-[30%]"
                 src="https://images.unsplash.com/photo-1475669698648-2f144fcaaeb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
             <img class="mt-[100px] z-10 h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
+                v-bind:src="infoUser.data.avatar"
                 alt="">
             <!-- <p class="font-semibold">{{ infoUser.data?.username }}</p> -->
-            <p class="font-semibold">Truong Phuc</p>
+            <p class="font-semibold">{{ infoUser.data.username }}</p>
             <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
                 <img src="../assets/images/message.png" width="30">
                 <p class="pl-2">phucdang@gmail.com</p>
@@ -55,7 +55,7 @@
                     </svg>
                 </span>
                 <span class="tracking-wide">ABOUT</span>
-               <button class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-yellow-400 shadow-lg">
+               <button @click="activeEdit = !activeEdit" class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-yellow-400 shadow-lg">
                     <img src="../assets/images/edit.png" width="19" >
                     <p class="ml-1">Edit</p>
                </button>
@@ -105,7 +105,7 @@
             </div>
         </div>
     </div>
-    <EditProfile/>
+    <EditProfile  v-if="activeEdit" v-model:activeEdit="activeEdit"/>
 </template>
 
 <style></style>
