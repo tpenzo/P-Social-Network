@@ -5,11 +5,12 @@ import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
 import Profile from '../pages/Profile.vue';
 import { auth } from '../main.js';
+import Edit from '../Components/EditProfile.vue'
 
 const routes = [
    { path: '/', name: 'home-page', component: Home },
    { path: '/profile/:_id', name: 'profile-page', component: Profile },
-   { path: '/login', name: 'login-page', component: Login },
+   { path: '/login', name: 'login-page', component: Profile },
    { path: '/register', name: 'register-page', component: Register },
    { path: '/:pathMatch(.*)*', name: 'notfound-page', component: Notfound },
 ];
