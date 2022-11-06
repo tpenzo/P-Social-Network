@@ -21,10 +21,12 @@
         <!-- Left -->
         <div className="flex items-center space-x-2 w-full max-w-xs">
             <!-- Logo -->
-            <div class="flex justify-around mr-5">
-                <img src="@/assets/images/social-media.png" width="45" height="50" />
-                <h1 class="text-black font-bold ml-3">App Media</h1>
-            </div>
+            <router-link :to="{name: 'home-page'}">
+                <div class="flex justify-around mr-5">
+                    <img src="@/assets/images/social-media.png" width="45" height="50" />
+                    <h1 class="text-black font-bold ml-3">App Media</h1>
+                </div>
+            </router-link>
             <!-- Search -->
             <Search/>
         </div>

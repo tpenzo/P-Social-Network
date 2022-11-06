@@ -55,14 +55,16 @@
                     </svg>
                 </span>
                 <span class="tracking-wide">ABOUT</span>
-               <button @click="activeEdit = !activeEdit" class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-yellow-400 shadow-lg">
+                
+               <button  v-if="route.params._id === auth.user._id"
+                    @click="activeEdit = !activeEdit" class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-yellow-400 shadow-lg">
                     <img src="../assets/images/edit.png" width="19" >
                     <p class="ml-1">Edit</p>
                </button>
-                <!-- <button class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-blue-400 shadow-lg">
+                <button v-else class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-blue-400 shadow-lg">
                     <img src="../assets/images/add.png" width="19">
                     <p class="ml-1">Follow</p>
-                </button> -->
+                </button>
             </div>
             <div class="text-gray-700">
                 <div class="flex mt-[5px]">

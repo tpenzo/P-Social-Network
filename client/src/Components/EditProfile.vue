@@ -1,12 +1,37 @@
 <script setup>
     import { defineEmits } from 'vue'
     import { Form, Field, ErrorMessage } from 'vee-validate'
+    import * as yup from 'yup'
     const emit = defineEmits(['update:activeEdit'])
+    
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+    const formEditValidation = yup.object().shape({
+        firstname: yup
+            .string()
+            .required("The firstname must have a value."),
+        lastname: yup
+            .string()
+            .required("The lastname must have a value."),
+        email: yup
+            .string()
+            .required("The email must have a value.")
+            .email("This is field email"),
+        phone: yup.string().matches(phoneRegExp, 'Phone number is not valid')
+            .min(10, "Too short")
+            .max(10, "Too long"),
+    })
+
+    const handleSubmit = () => {
+        
+    }
+
+
 </script>
 
 <template>
 <div class="edit_profile">
-    <Form>
+    <Form  @submit="handleSubmit()" :validation-schema="formEditValidation">
         <div class="info_avatar">
             <img />
             <span>
@@ -17,45 +42,39 @@
         </div>
         <div class="flex">
             <div class="mt-2 mr-5">
-                <label class="block text-gray-600 text-sm font-bold mb-2">First name</label>
-                <Field
-                    class="bg-gray-200 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                <label class="lableField">First name</label>
+                <Field class="inputField"
                     name="firstname"/>
                 <ErrorMessage class="text-red-500 text-[12px]" name="firstname" />
             </div>
             <div class="mt-2">
-                <label class="block text-gray-600 text-sm font-bold mb-2">Last name</label>
-                <Field
-                    class="bg-gray-200 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                <label class="lableField">Last name</label>
+                <Field class="inputField"
                     name="lastname" />
                 <ErrorMessage class="text-red-500 text-[12px]" name="lastname" />
             </div>
         </div>
         <div class="mt-4">
-            <label class="block text-gray-600 text-sm font-bold mb-2">Mobile</label>
-            <Field
-                class="bg-gray-200 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                name="mobile"/>
-            <ErrorMessage class="text-red-500 text-[13px]" name="mobile" />
+            <label class="lableField">Phone</label>
+            <Field class="inputField"
+                name="phone"/>
+            <ErrorMessage class="text-red-500 text-[13px]" name="phone" />
         </div>
         <div class="mt-4">
-            <label class="block text-gray-600 text-sm font-bold mb-2">Address</label>
-            <Field
-                class="bg-gray-200 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+            <label class="lableField">Address</label>
+            <Field class="inputField"
                 name="adress" />
             <ErrorMessage class="text-red-500 text-[13px]" name="address" />
         </div>
         <div class="mt-4">
-            <label class="block text-gray-600 text-sm font-bold mb-2">Story</label>
-            <textarea 
-                  rows="4"
-                class="bg-gray-200 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+            <label class="lableField">Story</label>
+            <textarea rows="4" class="inputField"
                 name="story" />
             <ErrorMessage class="text-red-500 text-[13px]" name="story" />
         </div>
         <div class="mt-4">
-            <label class="block text-gray-600 text-sm font-bold mb-2">Gender</label>
-            <select id="gender" name="gender" class="bg-gray-200 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none">
+            <label class="lableField">Gender</label>
+            <select id="gender" name="gender"  class="inputField">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
@@ -64,7 +83,7 @@
         </div>
        <div class="mt-3 relative h-[35px]">
             <div class="absolute right-0 flex items-center">
-                <button class="flex items-center py-2 px-4 rounded-lg text-sm bg-yellow-300 shadow-lg">
+                <button class="flex items-center py-2 px-4 rounded-lg text-sm bg-yellow-200 shadow-lg">
                     Edit
                 </button>
                 <button @click="emit('update:activeEdit', false)" class="flex items-center py-2 px-4 rounded-lg text-sm bg-gray-500 text-white shadow-lg ml-[10px]">

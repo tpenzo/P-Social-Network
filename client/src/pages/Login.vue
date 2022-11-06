@@ -33,19 +33,18 @@
             <h2 class="text-2xl font-semibold  text-center">APP MEDIA</h2>
             <p class="mt-2 text-sm text-gray-600 text-center"> >-- Welcome back --> </p>
             <div class="mt-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Username</label>
-                <Field
-                    class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                <label class="lableField">Username</label>
+                <Field class="inputField"
                     name="username" v-model="userLogin.username" />
                 <ErrorMessage class="text-red-500 text-[13px]" name="username" />
             </div>
             <div class="mt-4">
                 <div class="flex justify-between">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <label class="lableField">Password</label>
                     <a href="#" class="text-xs text-gray-500">Forget Password ?</a>
                 </div>
                 <Field
-                    class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                    class="inputField"
                     name="password" v-model="userLogin.password" type="password"/>
                 <ErrorMessage class="text-red-500 text-[13px]" name="password" />
             </div>
@@ -55,7 +54,9 @@
             </div>  
             <div class="mt-5 flex items-center justify-between">
                 <span class="border-b w-1/5 md:w-1/4"></span>
-                <router-link :to="{name: 'register-page'}" class="text-xs text-gray-500 uppercase hover:text-red-500 hover:text-[15px]">or sign up</router-link>
+                <router-link :to="{name: 'register-page'}" class="text-xs text-gray-500 uppercase hover:text-red-500 hover:text-[15px]">
+                    or sign up
+                </router-link>
                 <span class="border-b w-1/5 md:w-1/4"></span>
             </div>
         </div>

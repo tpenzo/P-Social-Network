@@ -62,49 +62,43 @@
                 <p class="font-bold text-2xl text-black text-center mt-1">REGISTER</p>
                 <div class="flex">
                     <div class="mt-4 mr-5">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">First name</label>
-                        <Field
-                            class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                        <label class="lableField">First name</label>
+                        <Field class="inputField"
                             name="firstname" v-model="userRegis.firstname"/>
                         <ErrorMessage class="text-red-500 text-[12px]" name="firstname" />
                     </div>
                     <div class="mt-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Last name</label>
-                        <Field
-                            class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                        <label class="lableField">Last name</label>
+                        <Field class="inputField"
                             name="lastname" v-model="userRegis.lastname" />
                          <ErrorMessage class="text-red-500 text-[12px]" name="lastname" />
                     </div>
                 </div>
                 <div class="mt-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Username</label>
-                    <Field
-                        class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                    <label class="lableField">Username</label>
+                    <Field class="inputField"
                         name="username" v-model="userRegis.username" />
                     <ErrorMessage class="text-red-500 text-[13px]" name="username" />
                 </div>
                 <div class="mt-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-                    <Field
-                        class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                    <label class="lableField">Email Address</label>
+                    <Field class="inputField"
                         name="email" v-model="userRegis.email" />
                     <ErrorMessage class="text-red-500 text-[13px]" name="email" />
                 </div>
                 <div class="mt-4">
                     <div class="flex justify-between">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                        <label class="lableField">Password</label>
                     </div>
-                    <Field
-                        class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                    <Field class="inputField"
                         name="password" v-model="userRegis.password" type="password"/>
                     <ErrorMessage class="text-red-500 text-[13px]" name="password" />
                 </div>
                 <div class="mt-4">
                     <div class="flex justify-between">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Confirm password</label>
+                        <label class="lableField">Confirm password</label>
                     </div>
-                    <Field
-                        class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                    <Field class="inputField"
                         name="confirmPassword" v-model="userRegis.confirmPassword" type="password" />
                     <ErrorMessage class="text-red-500 text-[13px]" name="confirmPassword" />
                     </div>
@@ -114,7 +108,9 @@
                 </div>
                 <div class="mt-4 flex items-center justify-between">
                     <span class="border-b w-1/5 md:w-1/4"></span>
-                    <router-link :to="{name: 'login-page'}" class="text-xs text-gray-500 uppercase hover:text-red-500 hover:text-[15px]">or sign in</router-link>
+                    <router-link :to="{name: 'login-page'}" class="text-xs text-gray-500 uppercase hover:text-red-500 hover:text-[15px]">
+                        or sign in
+                    </router-link>
                     <span class="border-b w-1/5 md:w-1/4"></span>
                 </div>
             </div>
