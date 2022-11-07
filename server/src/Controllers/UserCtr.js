@@ -25,6 +25,15 @@ class UserCtr {
          return res.status(500).json({ message: error.message, error });
       }
    }
+   // [GET] api/user/update
+   async updateUser(req, res) {
+      try {
+         await UserModel.findByIdAndUpdate({ _id: req.uerLogin._id }, req.body);
+         return res.status(200).json({ message: 'Update Success' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
 }
 
 export default new UserCtr();

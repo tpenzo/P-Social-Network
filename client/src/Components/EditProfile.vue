@@ -1,11 +1,17 @@
 <script setup>
-    import { defineEmits } from 'vue'
+    import { defineEmits, defineProps, reactive } from 'vue'
     import { Form, Field, ErrorMessage } from 'vee-validate'
     import * as yup from 'yup'
-    const emit = defineEmits(['update:activeEdit'])
+    import { checkImage }from '../Utils/ImgUpload.js'
+    import { alert } from '../main.js'
+    import { updateProfile } from '../Api/ProfileAPI'
     
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+    const emit = defineEmits(['update:activeEdit'])
+    const props = defineProps({user: Object})
+    const avatar = reactive({ file: '', url: '' })
 
+    // Validtion form
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
     const formEditValidation = yup.object().shape({
         firstname: yup
             .string()
@@ -22,77 +28,106 @@
             .max(10, "Too long"),
     })
 
-    const handleSubmit = () => {
-        
+    // Submit form
+    const handleSubmit = (values) => {
+        updateProfile(values, avatar.file)
     }
+
+
+    // Get image and render UI
+    const changeAvatar = (e) => {
+        const file = e.target.files[0];
+        const err = checkImage(file);
+        if (err) {
+            alert.alertError(err)
+        } else {
+            avatar.file = file;
+            avatar.url = URL.createObjectURL(avatar.file) // URL.createObjectURL don't working in template
+        }
+    };
+
 
 
 </script>
 
 <template>
-<div class="edit_profile">
-    <Form  @submit="handleSubmit()" :validation-schema="formEditValidation">
-        <div class="info_avatar">
-            <img />
-            <span>
-                <img class="" src="../assets/images/pictureEdit.png" width="40" />
-                <p>Change</p>
-                <input type="file" name="file" id="file_up" accept="image/*" />
-            </span>
-        </div>
-        <div class="flex">
-            <div class="mt-2 mr-5">
-                <label class="lableField">First name</label>
+    <div class="edit_profile">
+        <Form :initial-values = "{
+                firstname: props.user.username,
+                lastname: props.user.lastname,
+                email: props.user.email,
+                phone: props.user.phone,
+                story: props.user.story,
+                gender: props.user.gender,
+                address: props.user.address
+             }"
+        :validation-schema="formEditValidation"  @submit="handleSubmit">
+            <div class="info_avatar">
+                <img :src="avatar.file ? avatar.url : '../assets/images/pictureEdit.png'"/>
+                <span>
+                    <img class="icon-edit" src="../assets/images/pictureEdit.png" width="40" />
+                    <p>Change</p>
+                    <input type="file" name="file" id="file_up" accept="image/*" @change="changeAvatar"/>
+                </span>
+            </div>
+            <div class="flex">
+                <div class="mt-2 mr-5">
+                    <label class="lableField">First name</label>
+                    <Field class="inputField"
+                        name="firstname"/>
+                    <ErrorMessage class="text-red-500 text-[12px]" name="firstname" />
+                </div>
+                <div class="mt-2">
+                    <label class="lableField">Last name</label>
+                    <Field class="inputField"
+                        name="lastname" />
+                    <ErrorMessage class="text-red-500 text-[12px]" name="lastname" />
+                </div>
+            </div>
+            <div class="mt-4">
+                <label class="lableField">Email</label>
+                <Field class="inputField" name="email" />
+                <ErrorMessage class="text-red-500 text-[13px]" name="email" />
+            </div>
+            <div class="mt-4">
+                <label class="lableField">Phone</label>
                 <Field class="inputField"
-                    name="firstname"/>
-                <ErrorMessage class="text-red-500 text-[12px]" name="firstname" />
+                    name="phone"/>
+                <ErrorMessage class="text-red-500 text-[13px]" name="phone" />
             </div>
-            <div class="mt-2">
-                <label class="lableField">Last name</label>
+            <div class="mt-4">
+                <label class="lableField">Address</label>
                 <Field class="inputField"
-                    name="lastname" />
-                <ErrorMessage class="text-red-500 text-[12px]" name="lastname" />
+                    name="address" />
+                <ErrorMessage class="text-red-500 text-[13px]" name="address" />
             </div>
-        </div>
-        <div class="mt-4">
-            <label class="lableField">Phone</label>
-            <Field class="inputField"
-                name="phone"/>
-            <ErrorMessage class="text-red-500 text-[13px]" name="phone" />
-        </div>
-        <div class="mt-4">
-            <label class="lableField">Address</label>
-            <Field class="inputField"
-                name="adress" />
-            <ErrorMessage class="text-red-500 text-[13px]" name="address" />
-        </div>
-        <div class="mt-4">
-            <label class="lableField">Story</label>
-            <textarea rows="4" class="inputField"
-                name="story" />
-            <ErrorMessage class="text-red-500 text-[13px]" name="story" />
-        </div>
-        <div class="mt-4">
-            <label class="lableField">Gender</label>
-            <select id="gender" name="gender"  class="inputField">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
-            <ErrorMessage class="text-red-500 text-[13px]" name="gender" />
-        </div>
-       <div class="mt-3 relative h-[35px]">
-            <div class="absolute right-0 flex items-center">
-                <button class="flex items-center py-2 px-4 rounded-lg text-sm bg-yellow-200 shadow-lg">
-                    Edit
-                </button>
-                <button @click="emit('update:activeEdit', false)" class="flex items-center py-2 px-4 rounded-lg text-sm bg-gray-500 text-white shadow-lg ml-[10px]">
-                    Cancel
-                </button>
+            <div class="mt-4">
+                <label class="lableField">Story</label>
+                <textarea rows="4" class="inputField"
+                    name="story" />
+                <ErrorMessage class="text-red-500 text-[13px]" name="story" />
             </div>
-       </div>
-    </Form>
-</div>
+            <div class="mt-4">
+                <label class="lableField">Gender</label>
+                <select id="gender" name="gender"  class="inputField">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <ErrorMessage class="text-red-500 text-[13px]" name="gender" />
+            </div>
+            <div class="mt-3 relative h-[35px]">
+                <div class="absolute right-0 flex items-center">
+                    <button type="submit" class="flex items-center py-2 px-4 rounded-lg text-sm bg-yellow-300 shadow-lg">
+                        Edit
+                    </button>
+                    <button @click="emit('update:activeEdit', false)" class="flex items-center py-2 px-4 rounded-lg text-sm bg-gray-500 text-white shadow-lg ml-[10px]">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </Form>
+    </div>
 </template>
 
 <style scoped>
@@ -127,13 +162,19 @@
     justify-content: center;
 }
 
-.edit_profile .info_avatar img {
+.edit_profile .info_avatar > img {
+    display: block;
+    object-fit: cover;
+    width: 155px;
+    height: 150px;
+    margin: 0px auto;
+}
+.icon-edit{
     display: block;
     margin-top: 5px;
     object-fit: cover;
     margin-left: 40%;
 }
-
 .edit_profile .info_avatar span {
     position: absolute;
     bottom: -190%;

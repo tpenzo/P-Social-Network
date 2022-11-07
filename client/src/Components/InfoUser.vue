@@ -24,7 +24,6 @@
 
     const activeEdit = ref(false)
 
-    
 </script>
 
 <template>
@@ -107,7 +106,7 @@
             </div>
         </div>
     </div>
-    <EditProfile  v-if="activeEdit" v-model:activeEdit="activeEdit"/>
+    <EditProfile  v-if="activeEdit" v-model:activeEdit="activeEdit" :user="infoUser.data"/>
 </template>
 
 <style></style>

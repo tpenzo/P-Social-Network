@@ -13,11 +13,7 @@ export const imageUpload = async (image) => {
    let data;
    try {
       const formData = new FormData();
-      if (image.camera) {
-         formData.append('file', image.camera);
-      } else {
-         formData.append('file', image);
-      }
+      formData.append('file', image);
       formData.append('upload_preset', 'gpiktlek');
       formData.append('cloud_name', 'dykgq5bav');
       // Call api cloudinary
