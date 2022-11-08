@@ -8,7 +8,7 @@
     
     const emit = defineEmits(['update:activeEdit'])
     const props = defineProps({user: Object})
-    const avatar = reactive({ file: '', url: '' })
+    const avatar = reactive({ file: null, url: '' })
 
     // Validtion form
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -28,12 +28,7 @@
             .max(10, "Too long"),
     })
 
-    // Submit form
-    const handleSubmit = (values) => {
-        updateProfile(values, avatar.file)
-    }
-
-
+    
     // Get image and render UI
     const changeAvatar = (e) => {
         const file = e.target.files[0];
@@ -47,23 +42,30 @@
     };
 
 
+    // Submit form
+    const handleSubmit = (values) => {
+        emit('update:activeEdit', false)
+        updateProfile(values, avatar.file)
+    }
+
+
 
 </script>
 
 <template>
     <div class="edit_profile">
         <Form :initial-values = "{
-                firstname: props.user.username,
-                lastname: props.user.lastname,
-                email: props.user.email,
-                phone: props.user.phone,
-                story: props.user.story,
-                gender: props.user.gender,
-                address: props.user.address
-             }"
+           firstname: props.user.firstname,
+           lastname: props.user.lastname,
+           email: props.user.email,
+           phone: props.user.phone,
+           story: props.user.story,
+           gender: props.user.gender,
+           address: props.user.address
+        }"
         :validation-schema="formEditValidation"  @submit="handleSubmit">
             <div class="info_avatar">
-                <img :src="avatar.file ? avatar.url : '../assets/images/pictureEdit.png'"/>
+                <img :src="avatar.file ? avatar.url : user.avatar"/>
                 <span>
                     <img class="icon-edit" src="../assets/images/pictureEdit.png" width="40" />
                     <p>Change</p>
@@ -103,17 +105,17 @@
             </div>
             <div class="mt-4">
                 <label class="lableField">Story</label>
-                <textarea rows="4" class="inputField"
-                    name="story" />
+                <Field as="textarea" rows="4" class="inputField"
+                    name="story"/>
                 <ErrorMessage class="text-red-500 text-[13px]" name="story" />
             </div>
             <div class="mt-4">
                 <label class="lableField">Gender</label>
-                <select id="gender" name="gender"  class="inputField">
+                <Field as="select" id="gender" name="gender"  class="inputField">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
-                </select>
+                </Field>
                 <ErrorMessage class="text-red-500 text-[13px]" name="gender" />
             </div>
             <div class="mt-3 relative h-[35px]">

@@ -1,6 +1,6 @@
 <script setup>
     import { auth } from '../main';
-    import { watchEffect, reactive, ref } from 'vue'
+    import { watchEffect, reactive, ref, watch, computed } from 'vue'
     import { useRoute } from 'vue-router'
     import { profile } from '../main.js';
     import { getProfileUser } from '../Api/ProfileAPI.js';
@@ -11,7 +11,6 @@
     const infoUser = reactive({data: null})
     
     watchEffect(async () => {
-        console.log(route.params._id)
         if (route.params._id === auth.user._id){
             infoUser.data = auth.user 
         } else if (route.params._id === profile.user?._id){
@@ -20,6 +19,15 @@
             await getProfileUser(route.params._id)
             infoUser.data = profile.user
         }
+    })
+
+    // Call when edit Success
+    watch(auth, async () => {
+        infoUser.data = auth.user
+    })
+
+    const fullname = computed(() => {
+        return `${infoUser.data?.lastname} ${infoUser?.firstname}` 
     })
 
     const activeEdit = ref(false)
@@ -32,20 +40,19 @@
             <img class="rounded-lg absolute w-full h-[30%]"
                 src="https://images.unsplash.com/photo-1475669698648-2f144fcaaeb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
             <img class="mt-[100px] z-10 h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
-                v-bind:src="infoUser.data.avatar"
+                v-bind:src="infoUser.data?.avatar"
                 alt="">
-            <!-- <p class="font-semibold">{{ infoUser.data?.username }}</p> -->
-            <p class="font-semibold">{{ infoUser.data.username }}</p>
+            <p class="font-semibold">{{ fullname }}</p>
             <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
                 <img src="../assets/images/message.png" width="30">
-                <p class="pl-2">phucdang@gmail.com</p>
+                <p class="pl-2">{{ infoUser.data?.username }}</p>
             </div>
         </div>
 
         <hr class="border-gray-200 dark:border-gray-700 my-[10px]" />
 
         <!-- About -->
-        <div class="mb-[5px]">
+        <div class="mb-[5px] w-80">
             <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                 <span clas="text-green-500">
                     <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -55,7 +62,7 @@
                 </span>
                 <span class="tracking-wide">ABOUT</span>
                 
-               <button  v-if="route.params._id === auth.user._id"
+               <button  v-if="route.params._id === auth.user?._id"
                     @click="activeEdit = !activeEdit" class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-yellow-400 shadow-lg">
                     <img src="../assets/images/edit.png" width="19" >
                     <p class="ml-1">Edit</p>
@@ -67,24 +74,24 @@
             </div>
             <div class="text-gray-700">
                 <div class="flex mt-[5px]">
-                    <div class="font-semibold">Mobile:</div>
-                    <div class="ml-5">0346405050</div>
+                    <div class="font-semibold">Phone:</div>
+                    <div class="ml-5">{{ infoUser.data?.phone }}</div>
                 </div>
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Address:</div>
-                    <div class="ml-5">Ho Chi Minh</div>
+                    <div class="ml-5">{{ infoUser.data?.address }}</div>
                 </div>
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Gender:</div>
-                    <div class="ml-5">Mail</div>
+                    <div class="ml-5">{{ infoUser.data?.gender }}</div>
                 </div>
                 <div class="flex mt-[5px]">
-                    <div class="font-semibold">Contact: </div>
-                    <div class="ml-5">truongphuc@gmail.com</div>
+                    <div class="font-semibold">Contact:</div>
+                    <div class="ml-5">{{ infoUser.data?.email }}</div>
                 </div>
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Story:</div>
-                    <div class="ml-5">Don’t cry because it’s over, smile because it happened</div>
+                    <div class="ml-5">{{ infoUser.data?.story }}</div>
                 </div>
             </div>
         </div>

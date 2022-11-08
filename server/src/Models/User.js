@@ -16,7 +16,7 @@ const UserModel = new Schema(
       },
       role: { type: String, default: 'user' },
       email: { type: String, required: true, trim: true, unique: true },
-      gender: { type: String, default: 'male   ' },
+      gender: { type: String, default: 'male' },
       phone: { type: String, default: '' },
       address: { type: String, default: '' },
       story: { type: String, default: '', maxlength: 200 },

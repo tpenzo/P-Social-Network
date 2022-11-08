@@ -10,5 +10,8 @@ export const AuthStore = defineStore('authStore', {
       resert() {
          (this.token = null), (this.user = null);
       },
+      updateUser(user) {
+         this.user = { ...this.user, ...user };
+      },
    },
 });

@@ -17,7 +17,7 @@ class UserCtr {
       try {
          const user = await UserModel.findById(req.params._id).select('-password');
          if (user) {
-            return res.status(200).json({ message: 'successful', user });
+            return res.status(200).json({ message: 'successfuly', user });
          } else {
             return res.status(400).json({ message: 'User does not exist' });
          }
