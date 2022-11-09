@@ -7,5 +7,8 @@ export const ProfileStore = defineStore('profileStore', {
          this.user = user;
          this.posts = posts;
       },
+      updateUser(user) {
+         this.user = { ...this.user, ...user };
+      },
    },
 });

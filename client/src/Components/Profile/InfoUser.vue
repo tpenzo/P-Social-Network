@@ -1,10 +1,11 @@
 <script setup>
-    import { auth } from '../main';
+    import { auth } from '../../main';
     import { watchEffect, reactive, ref, watch, computed } from 'vue'
     import { useRoute } from 'vue-router'
-    import { profile } from '../main.js';
-    import { getProfileUser } from '../Api/ProfileAPI.js';
+    import { profile } from '../../main.js';
+    import { getProfileUser } from '../../Api/ProfileAPI.js';
     import  EditProfile  from './EditProfile.vue'
+    import BtnFollow from './BtnFollow.vue'
     
     const route = useRoute()
 
@@ -26,6 +27,11 @@
         infoUser.data = auth.user
     })
 
+    // Call when user unfollow or follow
+    watch(profile, async () => {
+        infoUser.data = profile.user
+    })
+
     const fullname = computed(() => {
         return `${infoUser.data?.lastname} ${infoUser?.firstname}` 
     })
@@ -44,7 +50,7 @@
                 alt="">
             <p class="font-semibold">{{ fullname }}</p>
             <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
-                <img src="../assets/images/message.png" width="30">
+                <img src="../../assets/images/message.png" width="30">
                 <p class="pl-2">{{ infoUser.data?.username }}</p>
             </div>
         </div>
@@ -64,13 +70,10 @@
                 
                <button  v-if="route.params._id === auth.user?._id"
                     @click="activeEdit = !activeEdit" class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-yellow-400 shadow-lg">
-                    <img src="../assets/images/edit.png" width="19" >
+                    <img src="../../assets/images/edit.png" width="19" >
                     <p class="ml-1">Edit</p>
                </button>
-                <button v-else class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-blue-400 shadow-lg">
-                    <img src="../assets/images/add.png" width="19">
-                    <p class="ml-1">Follow</p>
-                </button>
+               <BtnFollow v-else :_id="infoUser.data?._id"/>
             </div>
             <div class="text-gray-700">
                 <div class="flex mt-[5px]">
@@ -100,16 +103,16 @@
 
         <div class="flex justify-center items-center gap-2 my-3">
             <div class="font-semibold text-center mx-4">
-                <p class="text-black">102</p>
+                <p class="text-black">0</p>
                 <span class="text-gray-400">Posts</span>
             </div>
             <div class="font-semibold text-center mx-4">
-                <p class="text-black">102</p>
+                <p class="text-black">{{ infoUser.data?.followers?.length }}</p>
                 <span class="text-gray-400">Followers</span>
             </div>
             <div class="font-semibold text-center mx-4">
-                <p class="text-black">102</p>
-                <span class="text-gray-400">Folowing</span>
+                <p class="text-black">{{ infoUser.data?.following?.length }}</p>
+                <span class="text-gray-400">Following</span>
             </div>
         </div>
     </div>

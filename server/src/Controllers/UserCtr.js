@@ -12,6 +12,7 @@ class UserCtr {
          return res.status(500).json({ message: error.message, error });
       }
    }
+
    // [GET] api/user/:_id
    async getUser(req, res) {
       try {
@@ -25,11 +26,47 @@ class UserCtr {
          return res.status(500).json({ message: error.message, error });
       }
    }
+
    // [GET] api/user/update
    async updateUser(req, res) {
       try {
          await UserModel.findByIdAndUpdate({ _id: req.uerLogin._id }, req.body);
          return res.status(200).json({ message: 'Update Success' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
+
+   // [GET] api/user/follow/:_id
+   async followUser(req, res) {
+      try {
+         await UserModel.findByIdAndUpdate(
+            { _id: req.uerLogin._id },
+            { $push: { following: req.params._id } }
+         );
+         await UserModel.findByIdAndUpdate(
+            { _id: req.params._id },
+            { $push: { followers: req.uerLogin._id } }
+         );
+         return res.status(200).json({ message: 'Follow successfuly' });
+      } catch (error) {
+         console.log("EEEEEEEEEEEee")
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
+   
+   // [GET] api/user/unfollow/:_id
+   async unFollowUser(req, res) {
+      try {
+         await UserModel.findByIdAndUpdate(
+            { _id: req.uerLogin._id },
+            { $pull: { following: req.params._id } }
+         );
+         await UserModel.findByIdAndUpdate(
+            { _id: req.params._id },
+            { $pull: { followers: req.uerLogin._id } }
+         );
+         return res.status(200).json({ message: 'Unfollow successfuly' });
       } catch (error) {
          return res.status(500).json({ message: error.message, error });
       }

@@ -1,5 +1,5 @@
 <script setup>
-    import Infouser from '../Components/InfoUser.vue'
+    import Infouser from '../Components/Profile/InfoUser.vue'
     import Blogs from '../Components/Blogs.vue'
 </script>
 <template>

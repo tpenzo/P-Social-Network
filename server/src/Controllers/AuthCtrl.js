@@ -6,7 +6,10 @@ class AuthCtrl {
    // [POST] .../api/auth/login
    async login(req, res) {
       try {
-         const user = await UserModel.findOne({ username: req.body.username });
+         const user = await UserModel.findOne({ username: req.body.username }).populate(
+            'followers following',
+            '-password'
+         );
          if (user) {
             // Check password
             const match = await bcrypt.compare(req.body.password, user.password);
@@ -16,21 +19,24 @@ class AuthCtrl {
                   { _id: user._id, role: user.role },
                   '500s'
                );
-               const refreshToken = token.refresh(
-                  { _id: user._id, role: user.role },
-                  '500s'
-               );
-               res.cookie('refreshToken', refreshToken, {
-                  httpOnly: true,
-                  // secure: false,
-                  // sameStime: 'strict',
-                  path: '/auth/refresh_token',
-                  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-               });
+               
+               // const refreshToken = token.refresh(
+               //    { _id: user._id, role: user.role },
+               //    '500s'
+               // );
+               // res.cookie('refreshToken', refreshToken, {
+               //    httpOnly: true,
+               //    // secure: false,
+               //    // sameStime: 'strict',
+               //    path: '/auth/refresh_token',
+               //    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+               // });
+
                // Handle user for return
+               const { password, ...others } = user._doc;
                return res.status(200).json({
                   message: 'Login Success',
-                  user,
+                  user: { ...others },
                   accessToken,
                });
             } else {

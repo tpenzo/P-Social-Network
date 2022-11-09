@@ -5,7 +5,7 @@ import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
 import Profile from '../pages/Profile.vue';
 import { auth } from '../main.js';
-import EditProfile from '../Components/EditProfile.vue';
+import EditProfile from '../Components/Profile/EditProfile.vue';
 
 const routes = [
    { path: '/', name: 'home-page', component: Home },

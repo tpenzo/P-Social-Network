@@ -2,9 +2,9 @@
     import { defineEmits, defineProps, reactive } from 'vue'
     import { Form, Field, ErrorMessage } from 'vee-validate'
     import * as yup from 'yup'
-    import { checkImage }from '../Utils/ImgUpload.js'
-    import { alert } from '../main.js'
-    import { updateProfile } from '../Api/ProfileAPI'
+    import { checkImage }from '../../Utils/ImgUpload.js'
+    import { alert } from '../../main.js'
+    import { updateProfile } from '../../Api/ProfileAPI'
     
     const emit = defineEmits(['update:activeEdit'])
     const props = defineProps({user: Object})
@@ -67,7 +67,7 @@
             <div class="info_avatar">
                 <img :src="avatar.file ? avatar.url : user.avatar"/>
                 <span>
-                    <img class="icon-edit" src="../assets/images/pictureEdit.png" width="40" />
+                    <img class="icon-edit" src="../../assets/images/pictureEdit.png" width="40" />
                     <p>Change</p>
                     <input type="file" name="file" id="file_up" accept="image/*" @change="changeAvatar"/>
                 </span>
