@@ -46,7 +46,7 @@
             </div>
         </form>
         <!-- Search result -->
-        <div v-if="showResult"
+        <div v-if="showResult" @click="showResult =! showResult"
             class="absolute top-[50px]  z-20 w-[250px] py-2 mt-4 drop-shadow-lg overflow-hidden bg-white rounded-md shadow-xl">
             <div v-if="users.data.length">
                 <div v-for="(user, index) in users.data" :key="user._id">
