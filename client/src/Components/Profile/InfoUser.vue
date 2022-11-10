@@ -1,40 +1,12 @@
 <script setup>
     import { auth } from '../../main';
-    import { watchEffect, reactive, ref, watch, computed } from 'vue'
+    import { ref,defineProps } from 'vue'
     import { useRoute } from 'vue-router'
-    import { profile } from '../../main.js';
-    import { getProfileUser } from '../../Api/ProfileAPI.js';
     import  EditProfile  from './EditProfile.vue'
     import BtnFollow from './BtnFollow.vue'
     
+    const props = defineProps({ user: Object })
     const route = useRoute()
-
-    const infoUser = reactive({data: null})
-    
-    watchEffect(async () => {
-        if (route.params._id === auth.user._id){
-            infoUser.data = auth.user 
-        } else if (route.params._id === profile.user?._id){
-            infoUser.data = profile.user
-        } else{
-            await getProfileUser(route.params._id)
-            infoUser.data = profile.user
-        }
-    })
-
-    // Call when edit Success
-    watch(auth, async () => {
-        infoUser.data = auth.user
-    })
-
-    // Call when user unfollow or follow
-    watch(profile, async () => {
-        infoUser.data = profile.user
-    })
-
-    const fullname = computed(() => {
-        return `${infoUser.data?.lastname} ${infoUser?.firstname}` 
-    })
 
     const activeEdit = ref(false)
 
@@ -46,12 +18,12 @@
             <img class="rounded-lg absolute w-full h-[30%]"
                 src="https://images.unsplash.com/photo-1475669698648-2f144fcaaeb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
             <img class="mt-[100px] z-10 h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
-                v-bind:src="infoUser.data?.avatar"
+                v-bind:src="user?.avatar"
                 alt="">
-            <p class="font-semibold">{{ fullname }}</p>
+            <p class="font-semibold">{{ user?.fullname }}</p>
             <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
                 <img src="../../assets/images/message.png" width="30">
-                <p class="pl-2">{{ infoUser.data?.username }}</p>
+                <p class="pl-2">{{ user?.username }}</p>
             </div>
         </div>
 
@@ -73,28 +45,28 @@
                     <img src="../../assets/images/edit.png" width="19" >
                     <p class="ml-1">Edit</p>
                </button>
-               <BtnFollow v-else :_id="infoUser.data?._id"/>
+               <BtnFollow v-else :_id="user?._id"/>
             </div>
             <div class="text-gray-700">
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Phone:</div>
-                    <div class="ml-5">{{ infoUser.data?.phone }}</div>
+                    <div class="ml-5">{{ user?.phone }}</div>
                 </div>
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Address:</div>
-                    <div class="ml-5">{{ infoUser.data?.address }}</div>
+                    <div class="ml-5">{{ user?.address }}</div>
                 </div>
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Gender:</div>
-                    <div class="ml-5">{{ infoUser.data?.gender }}</div>
+                    <div class="ml-5">{{ user?.gender }}</div>
                 </div>
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Contact:</div>
-                    <div class="ml-5">{{ infoUser.data?.email }}</div>
+                    <div class="ml-5">{{ user?.email }}</div>
                 </div>
                 <div class="flex mt-[5px]">
                     <div class="font-semibold">Story:</div>
-                    <div class="ml-5">{{ infoUser.data?.story }}</div>
+                    <div class="ml-5">{{ user?.story }}</div>
                 </div>
             </div>
         </div>
@@ -107,16 +79,16 @@
                 <span class="text-gray-400">Posts</span>
             </div>
             <div class="font-semibold text-center mx-4">
-                <p class="text-black">{{ infoUser.data?.followers?.length }}</p>
+                <p class="text-black">{{ user?.followers?.length }}</p>
                 <span class="text-gray-400">Followers</span>
             </div>
             <div class="font-semibold text-center mx-4">
-                <p class="text-black">{{ infoUser.data?.following?.length }}</p>
+                <p class="text-black">{{ user?.following?.length }}</p>
                 <span class="text-gray-400">Following</span>
             </div>
         </div>
     </div>
-    <EditProfile  v-if="activeEdit" v-model:activeEdit="activeEdit" :user="infoUser.data"/>
+    <EditProfile  v-if="activeEdit" v-model:activeEdit="activeEdit" :user="user"/>
 </template>
 
 <style></style>

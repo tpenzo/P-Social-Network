@@ -18,7 +18,10 @@
         <!-- Status -->
         <Status/>
         <!-- Posts -->
-        <Posts :posts="homePost.posts"/>
+        <Posts v-if="homePost.posts.length" :posts="homePost.posts"/>
+        <article v-else class="w-[510px] mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
+            NO POSTS
+        </article>
     </div>
 </template>
 

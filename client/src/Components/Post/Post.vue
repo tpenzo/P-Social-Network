@@ -9,7 +9,7 @@
 </script>
 <template>
         <article
-            class="w-full mb-4 break-inside p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col bg-clip-border">
+            class="w-full mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
             <div class="flex pb-6 items-center justify-between">
                 <div class="flex">
                     <a class="inline-block mr-4" href="#">
