@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import UserModel from '../Models/User.js';
 
 class Token {
    access(payload, expires) {
@@ -29,11 +30,12 @@ class Token {
          let token = req.headers.token;
          if (token) {
             token = token.split(' ')[1];
-            jwt.verify(token, process.env.PRIVATE_KEY, (err, user) => {
+            jwt.verify(token, process.env.PRIVATE_KEY, async (err, user) => {
                if (err) {
                   return res.status(403).json({ message: err.message });
                }
-               req.userLogin = user; // GET USER
+               const infoUser = await UserModel.findOne({ _id: user._id });
+               req.userLogin = infoUser; // GET USER
                next();
             });
          } else {

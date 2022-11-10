@@ -1,5 +1,11 @@
 <script setup>
-
+    import { defineProps, computed } from 'vue'
+    import moment from 'moment';
+    const props = defineProps({ post: Object })
+    
+    const fullname = computed(() => {
+        return `${props.post.user?.lastname} ${props.post.user?.firstname}`
+    })
 </script>
 <template>
         <article
@@ -7,26 +13,25 @@
             <div class="flex pb-6 items-center justify-between">
                 <div class="flex">
                     <a class="inline-block mr-4" href="#">
-                        <img class="rounded-full max-w-none w-12 h-12" src="https://randomuser.me/api/portraits/men/35.jpg" />
+                        <img class="rounded-full max-w-none w-12 h-12" :src="post.user.avatar" />
                     </a>
                     <div class="flex flex-col">
                         <div>
-                            <a class="inline-block text-lg font-bold dark:text-white" href="#">Wade Warren</a>
+                            <a class="inline-block text-lg font-bold dark:text-white" href="#">{{ fullname }}</a>
                         </div>
                         <div class="text-slate-500">
-                            July 17, 2018
+                            {{ moment(post.createdAt).fromNow() }}
                         </div>
                     </div>
                 </div>
             </div>
             <p class="dark:text-slate-200">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {{ post.content }}
             </p>
             <div class="py-4">
                 <a class="flex" href="#">
                     <img class="max-w-full rounded-br-lg"
-                        src="https://images.pexels.com/photos/69020/pexels-photo-69020.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+                        :src="post.images[0]" />
                 </a>
             </div>
             <div class="py-4">
