@@ -29,6 +29,7 @@
 
     // Handle Submit
     const handleSubmit = () => {
+        console.log(image.file)
         createPost(image.file, content.value)
     }
 

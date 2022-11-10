@@ -4,6 +4,6 @@ import Token from '../middlewares/Token.js';
 
 const router = express.Router();
 
-router.get('/create', Token.verifyToken, PostCtrl.createPost);
+router.post('/create', Token.verifyToken, PostCtrl.createPost);
 
 export default router;

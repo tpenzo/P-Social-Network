@@ -33,7 +33,7 @@ class Token {
                if (err) {
                   return res.status(403).json({ message: err.message });
                }
-               req.uerLogin = user; // GET USER
+               req.userLogin = user; // GET USER
                next();
             });
          } else {
