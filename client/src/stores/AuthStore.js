@@ -14,4 +14,9 @@ export const AuthStore = defineStore('authStore', {
          this.user = { ...this.user, ...user };
       },
    },
+   getters: {
+      fullName() {
+         return `${this.user.firstname} ${this.user.lastname}`;
+      },
+   },
 });

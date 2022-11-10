@@ -1,5 +1,5 @@
 <script setup>
-    import Blogs from './Blogs.vue'
+    import Posts from './Posts.vue'
     import Status from './Status.vue';
 </script>
 
@@ -8,8 +8,8 @@
     <div className="space-y-6 pb-24 max-w-lg">
         <!-- Status -->
         <Status/>
-        <!-- Blogs -->
-        <Blogs/>
+        <!-- Posts -->
+        <Posts/>
     </div>
 </template>
 

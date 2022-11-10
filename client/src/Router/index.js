@@ -22,7 +22,6 @@ const router = createRouter({
 
 // Private router
 router.beforeEach(async (to, from) => {
-   console.log(auth.token);
    if (
       !auth.token &&
       to.name !== 'login-page' &&

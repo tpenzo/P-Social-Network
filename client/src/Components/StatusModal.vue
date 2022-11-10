@@ -1,37 +1,51 @@
 <script setup>
-    import { reactive, defineEmits, defineProps } from 'vue'
-import { boolean } from 'yup';
-    const image = reactive({ file: null, url: '' })
+    import { reactive, defineEmits, ref } from 'vue'
+    import { auth } from '../main.js';
+    import { checkImage } from '../Utils/ImgUpload'; 
+    import { alert } from '../main.js';
+    import { createPost } from '../Api/HomePostAPI.js' 
+
     const emit = defineEmits(['update:showModal'])
 
+    const image = reactive({ file: null, url: '' })
+    const content = ref('')
+
+    // Function for Images
     const handleChangeImg = (e) => {
         const file = e.target.files[0]
-        image.file = file
-        image.url = URL.createObjectURL(file)
+        const err = checkImage(file)
+        if (err){
+            alert.alertError(err)
+        } else{
+            image.file = file
+            image.url = URL.createObjectURL(file)
+        }
     }
     
     const deleteImg = () =>{
         image.file = null
         image.url = ''
     }
-    const closeModal = () => {
-        console.log("ok")
-        emit('update:showModal', false)
+
+    // Handle Submit
+    const handleSubmit = () => {
+        createPost(image.file, content.value)
     }
 
 </script>
 <template>
    <div class="status_modal">
-         <form>
+         <form @submit.prevent="handleSubmit">
             <div class="status_header">
                <h5 class="m-0">Create Blog</h5>
-               <span @click="closeModal">&times;</span>
+               <span @click="emit('update:showModal', false)">&times;</span>
             </div>
 
             <div class="status_body">
                <textarea
                   name="content"
-                  placeholder="Type something..."
+                  v-model="content"
+                  :placeholder="auth.fullName + ', What are you thinking ?'"
                />
                 <!-- Show images -->
                <div class="show_images flex justify-center mx-0">
@@ -72,7 +86,7 @@ import { boolean } from 'yup';
        top: 0;
        left: 0;
        background: #0008;
-       z-index: 999;
+       z-index: 99;
        width: 100%;
        height: 100vh;
        overflow: auto;

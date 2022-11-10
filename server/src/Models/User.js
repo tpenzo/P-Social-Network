@@ -20,10 +20,10 @@ const UserModel = new Schema(
       phone: { type: String, default: '' },
       address: { type: String, default: '' },
       story: { type: String, default: '', maxlength: 200 },
-      followers: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-      following: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+      followers: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+      following: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
    },
    { timestamps: true }
 );
 
-export default mongoose.model('User', UserModel);
+export default mongoose.model('user', UserModel);

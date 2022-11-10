@@ -32,7 +32,7 @@
 
 <style scoped>
     .toast {
-        z-index: 2;
+        z-index: 999;
         position: fixed;
         top: 80px;
         right: 30px;

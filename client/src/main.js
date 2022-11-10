@@ -6,6 +6,7 @@ import './index.css';
 import { AlertStore } from './stores/AlertStore.js';
 import { AuthStore } from './stores/AuthStore.js';
 import { ProfileStore } from './stores/ProfileStore.js';
+import { HomePostStore } from './stores/HomePostStore.js';
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -16,6 +17,7 @@ app.use(Router);
 // Handle store
 export const alert = AlertStore();
 export const auth = AuthStore();
+export const homePost = HomePostStore();
 export const profile = ProfileStore();
 
 app.mount('#app');

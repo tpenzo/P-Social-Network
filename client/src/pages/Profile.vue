@@ -1,6 +1,6 @@
 <script setup>
     import Infouser from '../Components/Profile/InfoUser.vue'
-    import Blogs from '../Components/Blogs.vue'
+    import Posts from '../Components/Posts.vue'
 </script>
 <template>
 <main className="flex justify-center gap-x-5 px-4 sm:px-12">
@@ -9,7 +9,7 @@
             <Infouser/>
         </div>
         <div className="space-y-6 pb-24 max-w-lg">
-            <Blogs/>
+            <Posts/>
         </div>
     </div>
 </main>
