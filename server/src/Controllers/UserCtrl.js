@@ -24,7 +24,6 @@ class UserCtr {
                user: req.params._id,
             }).populate('user likes', 'username avatar firstname lastname');
             return res.status(200).json({ message: 'successfuly', user, posts });
-            
          } else {
             return res.status(400).json({ message: 'User does not exist' });
          }
@@ -72,6 +71,55 @@ class UserCtr {
             { $pull: { followers: req.userLogin._id } }
          );
          return res.status(200).json({ message: 'Unfollow successfuly' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
+
+   // [GET] api/user/unfollow/:_id
+   async unFollowUser(req, res) {
+      try {
+         await UserModel.findByIdAndUpdate(
+            { _id: req.userLogin._id },
+            { $pull: { following: req.params._id } }
+         );
+         await UserModel.findByIdAndUpdate(
+            { _id: req.params._id },
+            { $pull: { followers: req.userLogin._id } }
+         );
+         return res.status(200).json({ message: 'Unfollow successfuly' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
+
+   // [GET] api/user/suggestion/
+   async suggestionUser(req, res) {
+      try {
+         const newArr = [...req.userLogin.following, req.userLogin._id];
+         const num = req.query.num || 5;
+
+         const users = await UserModel.aggregate([
+            { $match: { _id: { $nin: newArr } } },
+            { $sample: { size: Number(num) } },
+            {
+               $lookup: {
+                  from: 'users',
+                  localField: 'followers',
+                  foreignField: '_id',
+                  as: 'followers',
+               },
+            },
+            {
+               $lookup: {
+                  from: 'users',
+                  localField: 'following',
+                  foreignField: '_id',
+                  as: 'following',
+               },
+            },
+         ]).project('-password');
+         return res.status(200).json({ users });
       } catch (error) {
          return res.status(500).json({ message: error.message, error });
       }

@@ -6,6 +6,7 @@ const router = express.Router();
 
 // api/user
 router.get('/search', Token.verifyToken, UserCtr.search);
+router.get('/suggestion', Token.verifyToken, UserCtr.suggestionUser);
 router.get('/:_id', Token.verifyToken, UserCtr.getUser);
 router.post('/update', Token.verifyToken, UserCtr.updateUser);
 router.get('/follow/:_id', Token.verifyToken, UserCtr.followUser);

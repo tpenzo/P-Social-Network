@@ -16,7 +16,7 @@
                 <div class="flex gap-2">
                     <span
                         class="flex items-center transition ease-out duration-300  bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                        <img src="@/assets/imaBlogpicture.png" alt="">
+                        <img src="../assets/images/picture.png" alt="">
                     </span>
                     <span
                         class="flex items-center transition ease-out duration-300  bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">

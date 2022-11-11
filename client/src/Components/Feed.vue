@@ -1,13 +1,14 @@
 <script setup>
-    import { watchEffect } from 'vue'
+    import { onMounted } from 'vue'
     import Posts from './Posts.vue'
     import Status from './Status.vue';
     import { homePost } from '../main.js';
     import { getPosts } from '../Api/HomePostAPI.js'
 
     // Get posts
-    watchEffect(() => {
-        getPosts()
+
+    onMounted(() => {
+         getPosts()
     })
 
 </script>

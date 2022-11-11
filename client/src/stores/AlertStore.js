@@ -6,7 +6,7 @@ export const AlertStore = defineStore('alertStore', {
    state: () => data,
    actions: {
       alertLoading() {
-         this.loading = true;
+          this.loading = true;
       },
       alertError(txtError) {
          this.loading = false;

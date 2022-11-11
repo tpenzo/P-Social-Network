@@ -17,7 +17,7 @@
     const  handleLogin = async () => {
         await loginAPI(userLogin)
         if(auth.token){
-            router.push({ name: 'home-page' })
+            router.push({name: 'home-page'})
         }
     }
 

@@ -14,6 +14,14 @@
 
 <template>
     <div class="bg-white shadow rounded-lg px-10 pb-5 sticky top-20">
+        <div class="absolute right-0">
+            <button v-if="route.params._id === auth.user?._id" @click="activeEdit = !activeEdit"
+                class="relative z-10 flex marker:items-center py-2 px-4 text-sm bg-yellow-400 shadow-lg">
+                <img src="../../assets/images/edit.png" width="19">
+                <p class="ml-1">Edit</p>
+            </button>
+            <BtnFollow class="relative z-10" v-else :_id="user?._id" />
+        </div>
         <div class="flex flex-col gap-1 text-center items-center">
             <img class="rounded-lg absolute w-full h-[30%]"
                 src="https://images.unsplash.com/photo-1475669698648-2f144fcaaeb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
@@ -40,12 +48,6 @@
                 </span>
                 <span class="tracking-wide">ABOUT</span>
                 
-               <button  v-if="route.params._id === auth.user?._id"
-                    @click="activeEdit = !activeEdit" class="flex marker:items-center py-2 px-4 rounded-lg text-sm bg-yellow-400 shadow-lg">
-                    <img src="../../assets/images/edit.png" width="19" >
-                    <p class="ml-1">Edit</p>
-               </button>
-               <BtnFollow v-else :_id="user?._id"/>
             </div>
             <div class="text-gray-700">
                 <div class="flex mt-[5px]">

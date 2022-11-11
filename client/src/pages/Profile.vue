@@ -1,7 +1,7 @@
 <script setup>
     import Infouser from '../Components/Profile/InfoUser.vue'
     import Posts from '../Components/Posts.vue'
-    import { watchEffect, reactive, watch } from 'vue'
+    import { reactive, watch, watchEffect } from 'vue'
     import { useRoute } from 'vue-router'
     import { profile, auth  } from '../main.js'
     import { getProfileUser } from '../Api/ProfileAPI.js'
@@ -17,7 +17,6 @@
         posts.data = newPosts
     }
 
-    
     watchEffect(async () => {
         if (route.params._id === auth.user._id) {
             updateData(auth.user, auth.fullName, auth.posts)
@@ -51,7 +50,7 @@
             <!-- Status -->
             <Status v-if="route.params._id === auth.user._id"/>
 
-            <Posts v-if="posts.data.length" :posts="posts.data"/>
+            <Posts v-if="posts.data?.length" :posts="posts.data"/>
             <div v-else class="w-[510px] mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
                 NO POSTS
             </div>

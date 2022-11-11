@@ -11,17 +11,22 @@
         <article
             class="w-full mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
             <div class="flex pb-6 items-center justify-between">
-                <div class="flex">
-                    <a class="inline-block mr-4" href="#">
-                        <img class="rounded-full max-w-none w-12 h-12" :src="post.user.avatar" />
-                    </a>
-                    <div class="flex flex-col">
-                        <div>
-                            <a class="inline-block text-lg font-bold dark:text-white" href="#">{{ fullname }}</a>
+                <div class="flex w-full justify-between">
+                    <div>
+                        <a class="inline-block mr-4" href="#">
+                            <img class="rounded-full max-w-none w-12 h-12" :src="post.user.avatar" />
+                        </a>
+                        <div class="flex flex-col">
+                            <div>
+                                <a class="inline-block text-lg font-bold dark:text-white" href="#">{{ fullname }}</a>
+                            </div>
+                            <div class="text-slate-500">
+                                {{ moment(post.createdAt).fromNow() }}
+                            </div>
                         </div>
-                        <div class="text-slate-500">
-                            {{ moment(post.createdAt).fromNow() }}
-                        </div>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/more.png" width="35">
                     </div>
                 </div>
             </div>
