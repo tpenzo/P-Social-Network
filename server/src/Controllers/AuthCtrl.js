@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import UserModel from '../Models/User.js';
 import token from '../middlewares/Token.js';
+import PostModel from '../Models/Post.js';
 
 class AuthCtrl {
    // [POST] .../api/auth/login
@@ -19,7 +20,11 @@ class AuthCtrl {
                   { _id: user._id, role: user.role },
                   '500s'
                );
-               
+               // Get posts of userLogin
+               const posts = await PostModel.find({
+                  user: user._id,
+               }).populate('user likes', 'username avatar firstname lastname');
+
                // const refreshToken = token.refresh(
                //    { _id: user._id, role: user.role },
                //    '500s'
@@ -38,6 +43,7 @@ class AuthCtrl {
                   message: 'Login Success',
                   user: { ...others },
                   accessToken,
+                  posts,
                });
             } else {
                return res.status(403).json({ message: 'Incorrect password' });

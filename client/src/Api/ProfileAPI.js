@@ -10,7 +10,7 @@ export const getProfileUser = async (_id) => {
       // Call API
       const res = await axiosClient.get(`/api/user/${_id}`);
       // Update store Profile
-      profile.getUser(res.user, null);
+      profile.getUser(res.user, res.posts); // update user and posts
       // Success
       alert.refreshAlert();
    } catch (error) {
@@ -42,7 +42,7 @@ export const followUser = async (_id) => {
    try {
       // ==> Loading
       alert.alertLoading();
-      
+
       // Call API
       const res = await axiosClient.get(`/api/user/follow/${_id}`);
 

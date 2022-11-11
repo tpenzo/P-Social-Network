@@ -5,23 +5,27 @@
     import { useRoute } from 'vue-router'
     import { profile, auth  } from '../main.js'
     import { getProfileUser } from '../Api/ProfileAPI.js'
+    import Status from '../Components/Status.vue'
 
     const route = useRoute()
     
     const infoUser = reactive({ data: null })
-    const updateInfoUser = (newInfo, fullName) =>{
+    const posts = reactive({data: null})
+    const updateData = (newInfo, fullName, newPosts) =>{
         infoUser.data = newInfo
         infoUser.data.fullname = fullName
+        posts.data = newPosts
     }
+
     
     watchEffect(async () => {
         if (route.params._id === auth.user._id) {
-            updateInfoUser(auth.user, auth.fullName)
+            updateData(auth.user, auth.fullName, auth.posts)
         } else if (route.params._id === profile.user?._id) {
-            updateInfoUser(profile.user, profile.fullName)
+            updateData(profile.user, profile.fullName, profile.posts)
         } else {
             await getProfileUser(route.params._id)
-            updateInfoUser(profile.user, profile.fullName)
+            updateData(profile.user, profile.fullName, profile.posts)
         }
     })
 
@@ -44,7 +48,13 @@
             <Infouser :user='infoUser.data'/>
         </div>
         <div className="space-y-6 pb-24 max-w-lg">
-            <Posts/>
+            <!-- Status -->
+            <Status v-if="route.params._id === auth.user._id"/>
+
+            <Posts v-if="posts.data.length" :posts="posts.data"/>
+            <div v-else class="w-[510px] mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
+                NO POSTS
+            </div>
         </div>
     </div>
 </main>

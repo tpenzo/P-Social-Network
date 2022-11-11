@@ -23,7 +23,7 @@ export const loginAPI = async (userLogin) => {
       // Call API
       const res = await axiosClient.post('api/auth/login', userLogin);
       // Set data user login
-      auth.authSaveData(res.user, res.accessToken);
+      auth.authSaveData(res.user, res.accessToken, res.posts);
       // Success
       alert.alertSuccess(res.message);
    } catch (error) {

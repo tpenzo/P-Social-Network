@@ -4,6 +4,7 @@ import Token from '../middlewares/Token.js';
 
 const router = express.Router();
 
+// api/user
 router.get('/search', Token.verifyToken, UserCtr.search);
 router.get('/:_id', Token.verifyToken, UserCtr.getUser);
 router.post('/update', Token.verifyToken, UserCtr.updateUser);

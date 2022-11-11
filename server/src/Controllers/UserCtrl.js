@@ -1,4 +1,5 @@
 import UserModel from '../Models/User.js';
+import PostModel from '../Models/Post.js';
 
 class UserCtr {
    // [GET] api/user/search with query username
@@ -18,7 +19,12 @@ class UserCtr {
       try {
          const user = await UserModel.findById(req.params._id).select('-password');
          if (user) {
-            return res.status(200).json({ message: 'successfuly', user });
+            // GET POST
+            const posts = await PostModel.find({
+               user: req.params._id,
+            }).populate('user likes', 'username avatar firstname lastname');
+            return res.status(200).json({ message: 'successfuly', user, posts });
+            
          } else {
             return res.status(400).json({ message: 'User does not exist' });
          }
@@ -50,11 +56,10 @@ class UserCtr {
          );
          return res.status(200).json({ message: 'Follow successfuly' });
       } catch (error) {
-         console.log("EEEEEEEEEEEee")
          return res.status(500).json({ message: error.message, error });
       }
    }
-   
+
    // [GET] api/user/unfollow/:_id
    async unFollowUser(req, res) {
       try {
