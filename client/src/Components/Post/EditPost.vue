@@ -3,6 +3,7 @@
     import { auth } from '../../main.js';
     import { checkImage } from '../../Utils/ImgUpload';
     import { alert } from '../../main.js';
+    import { updatePost } from  '../../Api/HomePostAPI.js'
 
     const emit = defineEmits(['update:showModalEdit'])
     const props = defineProps({ post: Object })
@@ -32,10 +33,11 @@
         image.url = ''
     }
 
-    // Handle Submit
-    const handleSubmit = () => {
-        console.log(image.file)
-        console.log(content.value)
+    // Handle Submit edit
+    const handleSubmit = async () => {
+        const postEdit = { ...props.post, content: content.value }
+        await updatePost(props.post._id, postEdit, image.file)
+        emit('update:showModalEdit', false)
     }
 
 </script>

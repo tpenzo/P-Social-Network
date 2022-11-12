@@ -42,6 +42,15 @@ class PostCtrl {
          return res.status(500).json({ message: error.message, error });
       }
    }
+
+   async updatePost(req, res) {
+      try {
+         await PostModel.findByIdAndUpdate({ _id: req.params._id }, req.body);
+         return res.status(200).json({ message: 'Update Success' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
 }
 
 export default new PostCtrl();

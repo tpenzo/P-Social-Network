@@ -40,16 +40,20 @@
                             </div>
                         </div>
                     </div>
+
                     <div v-if="auth.user._id === post.user._id" class="relative">
                         <img @click="showFuncPost = !showFuncPost" class="cursor-pointer" src="../../assets/images/more.png" width="35">
                         <div v-if="showFuncPost" @click="showFuncPost = !showFuncPost"
                             class="absolute drop-shadow-lg right-0 z-20 w-36 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
+                        
                             <button @click="showModalEdit = !showModalEdit"
                                 class=" px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transformhover:bg-gray-100 hover:bg-gray-100 hover:w-full">
                                 <img src="../../assets/images/edit.png" alt="" width="25" class="inline">
                                 <span class="ml-1">Edit</span>
                             </button>
+
                             <hr class="border-gray-200">
+
                             <button @click="handleDeletePost()"
                                 class="px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transformhover:bg-gray-100 hover:bg-gray-100 hover:w-full">
                                 <img src="../../assets/images/delete.png" alt="" width="21" class="inline">
@@ -62,7 +66,7 @@
             <p>
                 {{ post.content }}
             </p>
-            <div class="py-4">
+            <div v-if="post.images.length" class="py-4">
                 <a class="flex" href="#">
                     <img class="max-w-full rounded-br-lg"
                         :src="post.images[0]" />

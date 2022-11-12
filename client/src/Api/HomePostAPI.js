@@ -7,10 +7,8 @@ export const createPost = async (image, content) => {
    try {
       // ==> Loading
       alert.alertLoading();
-
       // Upload image
       const img = await imageUpload(image);
-
       // Call API
       const res = await axiosClient.post('/api/post/create', {
          images: [img.url],
@@ -47,10 +45,33 @@ export const deletePost = async (_id) => {
       // ==> Loading
       alert.alertLoading();
       // Call API
-      const res = await axiosClient.delete(`/api/post/${_id}`);
+      const res = await axiosClient.delete(`/api/post/delete/${_id}`);
       // Update
       homePost.deletePost(_id);
       auth.deletePost(_id);
+      // ==> Success
+      alert.alertSuccess(res.message);
+   } catch (error) {
+      alert.alertError(error.response.data.message);
+   }
+};
+
+export const updatePost = async (_id, postEdit, image) => {
+   try {
+      // ==> Loading
+      alert.alertLoading();
+      // Upload image if edit image
+      if (image) {
+         const img = await imageUpload(image);
+         postEdit = { ...postEdit, images: [img.url] };
+      } else{
+         postEdit = { ...postEdit, images: [] };
+      }
+      // Call API
+      const res = await axiosClient.post(`/api/post/update/${_id}`, postEdit);
+      // Update
+      homePost.updatePost(_id, postEdit);
+      auth.updatePost(_id, postEdit);
       // ==> Success
       alert.alertSuccess(res.message);
    } catch (error) {
