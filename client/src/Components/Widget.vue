@@ -45,10 +45,10 @@
             </div>
         </div>
         <!-- {/* Ads */} -->
-        <div className="bg-white w-11/11 h-64 px-2.5 rounded-lg sticky top-20 border border-gray-300 dark:border-none">
+        <div className="bg-white w-11/11 h-64 px-2.5 rounded-lg sticky top-20 border border-gray-300">
             <div className="relative w-full h-full">
-                <img src="https://media.licdn.com/media/AAYQAgTPAAgAAQAAAAAAADVuOvKzTF-3RD6j-qFPqhubBQ.png"
-                    alt="Advertise on LinkedIn" border="0">
+                <img class="w-full h-[94%] mt-2 rounded" src="../assets/images/adv.avif"
+                    alt="Advertise on App Media">
             </div>
         </div>
     </div>

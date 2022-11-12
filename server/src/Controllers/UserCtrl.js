@@ -22,7 +22,9 @@ class UserCtr {
             // GET POST
             const posts = await PostModel.find({
                user: req.params._id,
-            }).populate('user likes', 'username avatar firstname lastname');
+            })
+               .populate('user likes', 'username avatar firstname lastname')
+               .sort({ createdAt: -1 });;
             return res.status(200).json({ message: 'successfuly', user, posts });
          } else {
             return res.status(400).json({ message: 'User does not exist' });

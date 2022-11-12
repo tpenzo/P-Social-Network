@@ -29,7 +29,7 @@
 
     // Handle Submit
     const handleSubmit = () => {
-        console.log(image.file)
+        emit('update:showModal', false)
         createPost(image.file, content.value)
     }
 
@@ -38,7 +38,7 @@
    <div class="status_modal">
          <form @submit.prevent="handleSubmit">
             <div class="status_header">
-               <h5 class="m-0">Create Blog</h5>
+               <h5 class="m-0">Create Post</h5>
                <span @click="emit('update:showModal', false)">&times;</span>
             </div>
 

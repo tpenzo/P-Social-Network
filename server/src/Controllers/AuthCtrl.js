@@ -23,7 +23,9 @@ class AuthCtrl {
                // Get posts of userLogin
                const posts = await PostModel.find({
                   user: user._id,
-               }).populate('user likes', 'username avatar firstname lastname');
+               })
+                  .populate('user likes', 'username avatar firstname lastname')
+                  .sort({ createdAt: -1 });;
 
                // const refreshToken = token.refresh(
                //    { _id: user._id, role: user.role },

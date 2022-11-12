@@ -5,7 +5,9 @@ class PostCtrl {
       try {
          const posts = await PostModel.find({
             user: [...req.userLogin.following, req.userLogin._id],
-         }).populate('user likes', 'username avatar firstname lastname');
+         })
+            .populate('user likes', 'username avatar firstname lastname')
+            .sort({ createdAt: -1 });
          return res
             .status(200)
             .json({ message: 'Success!', result: posts.length, posts });
@@ -27,6 +29,15 @@ class PostCtrl {
          return res
             .status(200)
             .json({ message: 'Post created successfully', newPost: post });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
+
+   async deletePost(req, res) {
+      try {
+         await PostModel.findOneAndDelete({ _id: req.params._id });
+         return res.status(200).json({ message: 'Post deleted successfully' });
       } catch (error) {
          return res.status(500).json({ message: error.message, error });
       }

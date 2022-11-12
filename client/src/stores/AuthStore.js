@@ -14,6 +14,12 @@ export const AuthStore = defineStore('authStore', {
       updateUser(user) {
          this.user = { ...this.user, ...user };
       },
+      addPost(post) {
+         this.posts.unshift(post);
+      },
+      deletePost(_id) {
+         this.posts = this.posts.filter((post) => post._id !== _id);
+      },
    },
    getters: {
       fullName() {
