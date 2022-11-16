@@ -10,6 +10,9 @@ export const ProfileStore = defineStore('profileStore', {
       updateUser(user) {
          this.user = { ...this.user, ...user };
       },
+      updatePost(_id, postUpdate) {
+         this.posts = this.posts.map((post) => (post._id === _id ? postUpdate : post));
+      },
    },
    getters: {
       fullName() {

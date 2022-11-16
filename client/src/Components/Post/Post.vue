@@ -1,10 +1,9 @@
 <script setup>
-    import { defineProps, computed, ref } from 'vue'
+import { defineProps, computed, ref, watchEffect } from 'vue'
     import moment from 'moment';
     import EditPost from './EditPost.vue';
-    import { deletePost } from '../../Api/HomePostAPI.js'
+    import { deletePost, like, unlike } from '../../Api/HomePostAPI.js'
     import { auth } from '../../main.js';
-
     const props = defineProps({ post: Object })
     
     const fullname = computed(() => {
@@ -13,6 +12,7 @@
     
     const showFuncPost = ref(false)
     const showModalEdit = ref(false)
+    const isLike = ref(false)
 
 
     const handleDeletePost = () => {
@@ -20,6 +20,25 @@
             deletePost(props.post._id)
         }
     }
+
+    // Check like
+    watchEffect(() => {
+        const liked = props.post.likes.find(like => like._id === auth.user._id)
+        if (liked){
+            isLike.value = true
+        }
+    })
+
+    const handleLike = async () => {
+        await like(props.post)
+        isLike.value = true
+    }
+
+    const handleUnlike = async () => {
+        await unlike(props.post)
+        isLike.value = false
+    }
+
 
 </script>
 <template>
@@ -59,6 +78,7 @@
                                 <img src="../../assets/images/delete.png" alt="" width="21" class="inline">
                                 <span class="ml-1">Delete</span>
                             </button>
+
                         </div>
                     </div>
                 </div>
@@ -72,16 +92,16 @@
                         :src="post.images[0]" />
                 </a>
             </div>
-            <div class="py-4">
+            <div class="py-4" @click="isLike ? handleUnlike() : handleLike()">
                 <a class="inline-flex items-center" href="#">
                     <span class="mr-2">
-                        <svg class="fill-rose-60" style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+                        <svg :class="isLike ? 'fill-rose-600' : 'fill-rose-60' " style="width: 24px; height: 24px;" viewBox="0 0 24 24">
                             <path
                                 d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
                             </path>
                         </svg>
                     </span>
-                    <span class="text-lg font-bold">34</span>
+                    <span class="text-lg font-bold">{{ post.likes.length }}</span>
                 </a>
             </div>
             <div class="relative">

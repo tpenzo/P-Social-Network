@@ -51,6 +51,29 @@ class PostCtrl {
          return res.status(500).json({ message: error.message, error });
       }
    }
+   async likePost(req, res) {
+      try {
+         await PostModel.findByIdAndUpdate(
+            { _id: req.params._id },
+            { $push: { likes: req.userLogin._id } }
+         );
+         return res.status(200).json({ message: 'Like Success' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
+
+   async unlikePost(req, res) {
+      try {
+         await PostModel.findByIdAndUpdate(
+            { _id: req.params._id },
+            { $pull: { likes: req.userLogin._id } }
+         );
+         return res.status(200).json({ message: 'unlike Success' });
+      } catch (error) {
+         return res.status(500).json({ message: error.message, error });
+      }
+   }
 }
 
 export default new PostCtrl();
