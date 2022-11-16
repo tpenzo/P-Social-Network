@@ -1,4 +1,5 @@
 import PostModel from '../Models/Post.js';
+import CommentModel from '../Models/Comment.js';
 
 class PostCtrl {
    async getPosts(req, res) {
@@ -7,6 +8,13 @@ class PostCtrl {
             user: [...req.userLogin.following, req.userLogin._id],
          })
             .populate('user likes', 'username avatar firstname lastname')
+            .populate({
+               path: 'comments',
+               populate: {
+                  path: 'user likes',
+                  select: 'username avatar firstname lastname',
+               },
+            })
             .sort({ createdAt: -1 });
          return res
             .status(200)
@@ -36,7 +44,8 @@ class PostCtrl {
 
    async deletePost(req, res) {
       try {
-         await PostModel.findOneAndDelete({ _id: req.params._id });
+         const post = await PostModel.findOneAndDelete({ _id: req.params._id });
+         await CommentModel.deleteMany({ _id: { $in: post.comments } });
          return res.status(200).json({ message: 'Post deleted successfully' });
       } catch (error) {
          return res.status(500).json({ message: error.message, error });

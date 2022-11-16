@@ -25,19 +25,14 @@ class AuthCtrl {
                   user: user._id,
                })
                   .populate('user likes', 'username avatar firstname lastname')
-                  .sort({ createdAt: -1 });;
-
-               // const refreshToken = token.refresh(
-               //    { _id: user._id, role: user.role },
-               //    '500s'
-               // );
-               // res.cookie('refreshToken', refreshToken, {
-               //    httpOnly: true,
-               //    // secure: false,
-               //    // sameStime: 'strict',
-               //    path: '/auth/refresh_token',
-               //    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-               // });
+                  .populate({
+                     path: 'comments',
+                     populate: {
+                        path: 'user likes',
+                        select: 'username avatar firstname lastname',
+                     },
+                  })
+                  .sort({ createdAt: -1 });
 
                // Handle user for return
                const { password, ...others } = user._doc;
