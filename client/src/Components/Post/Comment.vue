@@ -1,13 +1,16 @@
 <script setup>
     import { defineProps, ref, watchEffect } from 'vue'
     import { auth } from '../../main';
-    import { deleteComment } from '../../Api/CommentAPI.js';
+    import { deleteComment, updateComment } from '../../Api/CommentAPI.js';
     import moment from 'moment'
     const props = defineProps({ comment: Object, post: Object })
 
     
     const show = ref(false)
     const showFuncCmt = ref(false)
+    
+    const showInputEdit = ref(false)
+    const newContent = ref(props.comment.content)
 
     // If you are the author of the post, you can perform the functions on all comments,
     // otherwise the comment creator will be able to perform the function on that comment.
@@ -29,7 +32,8 @@
     }
 
     const handleEditCmt = () => {
-        
+        updateComment(props.post, props.comment._id, newContent.value)
+        showInputEdit.value = false
     }
 
 </script>
@@ -47,7 +51,17 @@
                         <span class="text-slate-500 font-light">{{ moment(comment.createdAt).fromNow() }}</span>
                     </div>
                     <div class="w-[355px]">
-                        <p class="break-words">{{ comment.content }}</p>
+                        <form v-if="showInputEdit === true" class="relative mt-[10px]" @submit.prevent="handleEditCmt">
+                            <input class="pt-2 pb-2 pl-3 w-full h-11 bg-white rounded-lg placeholder:text-slate-600 font-medium pr-20"
+                                type="text" v-model="newContent" />
+                            <span class="flex absolute right-3 top-2/4 -mt-3 items-center">
+                                <span @click="showInputEdit = !showInputEdit" class="mr-[5px] hover:bg-red cursor-pointer">
+                                    &times;
+                                </span>
+                                <img src="../../assets/images/editCmt.png" width="26" height="26">
+                            </span>
+                        </form>
+                        <p v-else class="break-words">{{ comment.content }}</p>
                     </div>
                     <div class="mt-2 flex items-center">
                         <a class="inline-flex items-center py-2 mr-3" href="#">
@@ -70,7 +84,7 @@
                 <img @click="showFuncCmt = !showFuncCmt" class="cursor-pointer" src="../../assets/images/more.png" width="35">
                 <div v-if="showFuncCmt" @click="showFuncCmt = !showFuncCmt"
                     class="absolute drop-shadow-lg right-0 z-20 w-36 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-                    <button v-if="auth.user._id === props.comment.user._id"
+                    <button v-if="auth.user._id === props.comment.user._id" @click="showInputEdit = !showInputEdit"
                         class=" px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transformhover:bg-gray-100 hover:bg-gray-100 hover:w-full">
                         <img src="../../assets/images/edit.png" alt="" width="25" class="inline">
                         <span class="ml-1">Edit</span>
