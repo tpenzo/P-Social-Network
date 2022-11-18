@@ -1,7 +1,7 @@
 <script setup>
     import { defineProps, ref, watchEffect } from 'vue'
     import { auth } from '../../main';
-    import { deleteComment, updateComment } from '../../Api/CommentAPI.js';
+    import { deleteComment, updateComment, likeComment, unlikeComment } from '../../Api/CommentAPI.js';
     import moment from 'moment'
     const props = defineProps({ comment: Object, post: Object })
 
@@ -12,6 +12,8 @@
     const showInputEdit = ref(false)
     const newContent = ref(props.comment.content)
 
+    const isLike = ref(false)
+
     // If you are the author of the post, you can perform the functions on all comments,
     // otherwise the comment creator will be able to perform the function on that comment.
     watchEffect(async () => {
@@ -19,6 +21,14 @@
             show.value = true
         } else if(auth.user._id === props.comment.user._id){
             show.value = true
+        }
+    })
+
+    // Check like comment
+    watchEffect(() => {
+        const liked = props.comment.likes.find(like => like._id === auth.user._id)
+        if (liked) {
+            isLike.value = true
         }
     })
 
@@ -34,6 +44,16 @@
     const handleEditCmt = () => {
         updateComment(props.post, props.comment._id, newContent.value)
         showInputEdit.value = false
+    }
+    
+    const handleLike = async () => {
+        await likeComment(props.post, props.comment._id)
+        isLike.value = true
+    }
+
+    const handleUnlike = async () => {
+        await unlikeComment(props.post, props.comment._id)
+        isLike.value = false
     }
 
 </script>
@@ -63,20 +83,17 @@
                         </form>
                         <p v-else class="break-words">{{ comment.content }}</p>
                     </div>
-                    <div class="mt-2 flex items-center">
+                    <div class="flex items-center" @click="isLike ? handleUnlike() : handleLike()">
                         <a class="inline-flex items-center py-2 mr-3" href="#">
                             <span class="mr-2">
-                                <svg class="fill-rose-600 " style="width: 22px; height: 22px;" viewBox="0 0 24 24">
+                                <svg :class="isLike ? 'fill-rose-600' : 'fill-rose-60'" style="width: 22px; height: 22px;" viewBox="0 0 24 24">
                                     <path
                                         d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
                                     </path>
                                 </svg>
                             </span>
-                            <span class="text-base font-bold">12</span>
+                            <span class="text-base font-bold">{{comment.likes.length}}</span>
                         </a>
-                        <button class="py-2 px-4 font-medium hover:bg-slate-50  rounded-lg">
-                            Repply
-                        </button>
                     </div>
                 </div>
             </div>

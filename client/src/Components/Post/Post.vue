@@ -67,7 +67,6 @@
                         <img @click="showFuncPost = !showFuncPost" class="cursor-pointer" src="../../assets/images/more.png" width="35">
                         <div v-if="showFuncPost" @click="showFuncPost = !showFuncPost"
                             class="absolute drop-shadow-lg right-0 z-20 w-36 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-                        
                             <button @click="showModalEdit = !showModalEdit"
                                 class=" px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transformhover:bg-gray-100 hover:bg-gray-100 hover:w-full">
                                 <img src="../../assets/images/edit.png" alt="" width="25" class="inline">
@@ -81,7 +80,6 @@
                                 <img src="../../assets/images/delete.png" alt="" width="21" class="inline">
                                 <span class="ml-1">Delete</span>
                             </button>
-
                         </div>
                     </div>
                 </div>

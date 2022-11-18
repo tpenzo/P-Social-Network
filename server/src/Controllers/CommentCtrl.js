@@ -68,6 +68,42 @@ class CommentCtrl {
          return res.status(500).json({ message: err.message });
       }
    }
+   async likeComment(req, res) {
+      try {
+         const comment = await CommentModel.find({
+            _id: req.params._id,
+            likes: req.userLogin._id,
+         });
+         if (comment.length > 0)
+            return res.status(400).json({ msg: 'You liked this post.' });
+
+         await CommentModel.findOneAndUpdate(
+            { _id: req.params._id },
+            {
+               $push: { likes: req.userLogin._id },
+            },
+            { new: true }
+         );
+
+         res.json({ message: 'Liked Comment!' });
+      } catch (err) {
+         return res.status(500).json({ message: err.message });
+      }
+   }
+   async unLikeComment(req, res) {
+      try {
+         await CommentModel.findOneAndUpdate(
+            { _id: req.params._id },
+            {
+               $pull: { likes: req.userLogin._id },
+            },
+            { new: true }
+         );
+         res.json({ message: 'UnLiked Comment!' });
+      } catch (err) {
+         return res.status(500).json({ message: err.message });
+      }
+   }
 }
 
 export default new CommentCtrl();

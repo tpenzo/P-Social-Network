@@ -54,23 +54,15 @@
                 <!-- Show info -->
                 <div v-show="showDropdown"
                     class="absolute drop-shadow-lg right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-                    <a href="#"
-                        class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform">
-                        <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-                            :src="auth.user.avatar"
-                            alt="user avatar">
-                        <div class="mx-1">
-                            <h1 class="text-sm font-semibold text-gray-700">{{auth.fullName}}</h1>
-                            <p class="text-sm text-gray-500 font-thin">{{auth.user.email}}</p>
-                        </div>
-                    </a>
+                    <button
+                        class="w-full block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
+                        <router-link @click="showDropdown = !showDropdown" :to="{ name: 'profile-page', params: { _id: auth.user._id } }" 
+                            class="block text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
+                            view profile
+                        </router-link>
+                    </button>
                     <hr class="border-gray-200">
-                    <router-link @click="showDropdown = !showDropdown" :to="{ name: 'profile-page', params: { _id: auth.user._id } }" 
-                        class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
-                        view profile
-                    </router-link>
-                    <hr class="border-gray-200">
-                    <button  href="#" @click="handleLogout()"
+                    <button @click="handleLogout()"
                         class="w-full block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         Sign Out
                     </button>
