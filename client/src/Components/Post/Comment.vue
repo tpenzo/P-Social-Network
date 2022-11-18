@@ -1,8 +1,9 @@
 <script setup>
     import { defineProps, ref, watchEffect } from 'vue'
     import { auth } from '../../main';
+    import { deleteComment } from '../../Api/CommentAPI.js';
     import moment from 'moment'
-    const props = defineProps({ comment: Object, isAuthor: Function })
+    const props = defineProps({ comment: Object, post: Object })
 
     
     const show = ref(false)
@@ -11,7 +12,7 @@
     // If you are the author of the post, you can perform the functions on all comments,
     // otherwise the comment creator will be able to perform the function on that comment.
     watchEffect(async () => {
-        if (props.isAuthor()){
+        if (props.post.user._id === auth.user._id){
             show.value = true
         } else if(auth.user._id === props.comment.user._id){
             show.value = true
@@ -24,6 +25,10 @@
     
 
     const handleDeleteCmt = () => {
+        deleteComment(props.post, props.comment._id)
+    }
+
+    const handleEditCmt = () => {
         
     }
 

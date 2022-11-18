@@ -18,3 +18,19 @@ export const createComment = async (post, content) => {
       alert.alertError(error.response.data.message);
    }
 };
+
+export const deleteComment = async (post, _id) => {
+   try {
+      // ==> Loading
+      alert.alertLoading();
+      // Call API
+      const res = await axiosClient.delete(`/api/comment/${_id}/delete`);
+      // Update
+      post.comments = post.comments.filter((item) => item._id !== _id);
+      updatePostStore(post._id, post);
+      // Success
+      alert.alertSuccess(res.message);
+   } catch (error) {
+      alert.alertError(error.response.data.message);
+   }
+};

@@ -43,6 +43,23 @@ class CommentCtrl {
          return res.status(500).json({ message: err.message });
       }
    }
+   async delete(req, res) {
+      try {
+         const comment = await CommentModel.findOneAndDelete({
+            _id: req.params._id,
+         });
+
+         await PostModel.findOneAndUpdate(
+            { _id: comment.postId },
+            {
+               $pull: { comments: req.params.id },
+            }
+         );
+         res.status(200).json({ message: 'Deleted Comment!' });
+      } catch (err) {
+         return res.status(500).json({ message: err.message, err });
+      }
+   }
 }
 
 export default new CommentCtrl();

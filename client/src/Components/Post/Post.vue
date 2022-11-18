@@ -42,10 +42,7 @@
     const fullname = computed(() => {
         return `${props.post.user?.lastname} ${props.post.user?.firstname}`
     })
-    const isAuthor = () => {
-        return (auth.user._id === props.post.user._id)
-    }
-
+    
 </script>
 <template>
         <article
@@ -66,7 +63,7 @@
                         </div>
                     </div>
 
-                    <div v-if="isAuthor()" class="relative">
+                    <div v-if="props.post.user._id === auth.user._id" class="relative">
                         <img @click="showFuncPost = !showFuncPost" class="cursor-pointer" src="../../assets/images/more.png" width="35">
                         <div v-if="showFuncPost" @click="showFuncPost = !showFuncPost"
                             class="absolute drop-shadow-lg right-0 z-20 w-36 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
@@ -113,7 +110,7 @@
         
             <InputComment :post="post"/>
 
-            <Comments :comments="post.comments" :isAuthor="isAuthor"/>
+            <Comments :post="post" :comments="post.comments"/>
 
             <!-- <div class="w-full">
                 <a href="#"
