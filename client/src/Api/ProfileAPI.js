@@ -38,6 +38,9 @@ export const updateProfile = async (dataUpdate, newAvatar) => {
    }
 };
 
+
+// Fix la cai nay o trang chu ma follow thi bi loi
+// con neu vao proflie page tro lai home page thi ko
 export const followUser = async (_id) => {
    try {
       // ==> Loading

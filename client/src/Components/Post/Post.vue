@@ -1,17 +1,14 @@
 <script setup>
-import { defineProps, computed, ref, watchEffect } from 'vue'
+    import { defineProps, computed, ref, watchEffect } from 'vue'
     import moment from 'moment';
     import EditPost from './EditPost.vue';
     import { deletePost, like, unlike } from '../../Api/HomePostAPI.js'
     import { auth } from '../../main.js';
     import Comments from './Comments.vue';
-import InputComment from './InputComment.vue';
+    import InputComment from './InputComment.vue';
 
     const props = defineProps({ post: Object })
     
-    const fullname = computed(() => {
-        return `${props.post.user?.lastname} ${props.post.user?.firstname}`
-    })
     
     const showFuncPost = ref(false)
     const showModalEdit = ref(false)
@@ -42,6 +39,12 @@ import InputComment from './InputComment.vue';
         isLike.value = false
     }
 
+    const fullname = computed(() => {
+        return `${props.post.user?.lastname} ${props.post.user?.firstname}`
+    })
+    const isAuthor = () => {
+        return (auth.user._id === props.post.user._id)
+    }
 
 </script>
 <template>
@@ -63,7 +66,7 @@ import InputComment from './InputComment.vue';
                         </div>
                     </div>
 
-                    <div v-if="auth.user._id === post.user._id" class="relative">
+                    <div v-if="isAuthor()" class="relative">
                         <img @click="showFuncPost = !showFuncPost" class="cursor-pointer" src="../../assets/images/more.png" width="35">
                         <div v-if="showFuncPost" @click="showFuncPost = !showFuncPost"
                             class="absolute drop-shadow-lg right-0 z-20 w-36 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
@@ -110,7 +113,7 @@ import InputComment from './InputComment.vue';
         
             <InputComment :post="post"/>
 
-            <Comments :comments="post.comments"/>
+            <Comments :comments="post.comments" :isAuthor="isAuthor"/>
 
             <!-- <div class="w-full">
                 <a href="#"

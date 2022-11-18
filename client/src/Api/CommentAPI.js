@@ -1,5 +1,6 @@
 import { alert, auth, homePost, profile } from '../main.js';
 import axiosClient from '../Api/axiosClient.js';
+import { updatePostStore } from './HomePostAPI.js';
 
 export const createComment = async (post, content) => {
    try {
@@ -10,10 +11,7 @@ export const createComment = async (post, content) => {
       const res = await axiosClient.post(`/api/comment/create`, comment);
       // Update
       post.comments.push(res.newComment);
-
-      homePost.updatePost(post._id, post);
-      profile.updatePost(post._id, post);
-      auth.updatePost(post._id, post);
+      updatePostStore(post._id, post);
       // Success
       alert.refreshAlert();
    } catch (error) {
