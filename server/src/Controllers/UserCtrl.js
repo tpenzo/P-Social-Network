@@ -17,7 +17,9 @@ class UserCtr {
    // [GET] api/user/:_id
    async getUser(req, res) {
       try {
-         const user = await UserModel.findById(req.params._id).select('-password');
+         const user = await UserModel.findById(req.params._id)
+            .select('-password')
+            .populate('followers following', 'username avatar firstname lastname');
          if (user) {
             // GET POST
             const posts = await PostModel.find({

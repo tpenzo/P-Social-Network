@@ -11,6 +11,7 @@ export const getProfileUser = async (_id) => {
       const res = await axiosClient.get(`/api/user/${_id}`);
       // Update store Profile
       profile.getUser(res.user, res.posts); // update user and posts
+      console.log(profile.user);
       // Success
       alert.refreshAlert();
    } catch (error) {
@@ -38,9 +39,6 @@ export const updateProfile = async (dataUpdate, newAvatar) => {
    }
 };
 
-
-// Fix la cai nay o trang chu ma follow thi bi loi
-// con neu vao proflie page tro lai home page thi ko
 export const followUser = async (_id) => {
    try {
       // ==> Loading
@@ -49,16 +47,14 @@ export const followUser = async (_id) => {
       // Call API
       const res = await axiosClient.get(`/api/user/follow/${_id}`);
 
+      // Update followers of profile user
+      await getProfileUser(_id);
+
       // Update following of Auth
       const user = auth.user;
-      user.following.push(_id);
+      user.following.push(profile.user);
       auth.updateUser(user);
-
-      // Update followers of profile user
-      const userProfile = profile.user;
-      userProfile.followers.push(auth.user._id);
-      profile.updateUser(userProfile);
-
+     
       // ==> Success
       alert.alertSuccess(res.message);
    } catch (error) {
@@ -72,15 +68,13 @@ export const unFollowUser = async (_id) => {
       alert.alertLoading();
       const res = await axiosClient.get(`/api/user/unfollow/${_id}`);
 
+      // Update followers of profile user
+      await getProfileUser(_id);
+
       // Update following of Auth
       const user = auth.user;
-      user.following.pop(_id);
+      user.following = user.following.filter((item) => item._id !== _id);
       auth.updateUser(user);
-
-      // Update followers of profile user
-      const userProfile = profile.user;
-      userProfile.followers.pop(auth.user._id);
-      profile.updateUser(userProfile);
 
       // ==> Success
       alert.alertSuccess(res.message);

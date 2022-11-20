@@ -10,10 +10,6 @@ export const updatePostStore = (_id, post) => {
     profile.updatePost(_id, post);
 }
 
-export const updateCmtPostStore = (_id) => {
-   
-}
-
 export const createPost = async (image, content) => {
    try {
       // ==> Loading
