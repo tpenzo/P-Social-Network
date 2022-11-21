@@ -1,6 +1,5 @@
 // import axios from 'axios';
-import { alert } from '../main.js';
-import { auth } from '../main.js';
+import { alert, profile, auth } from '../main.js';
 import axiosClient from './axiosClient.js';
 
 export const registerAPI = async (userRegis) => {
@@ -35,9 +34,12 @@ export const logout = async () => {
    try {
       // Loading
       alert.alertLoading();
-      // Call API and resert AuthStore
-      const res = await axiosClient.get('api/auth/logout');
+
       auth.resert();
+      profile.resert();
+
+      // Call API and resert AuthStore
+      const res = await axiosClient.get('/api/auth/logout');
       // Success
       alert.alertSuccess(res.message);
    } catch (error) {

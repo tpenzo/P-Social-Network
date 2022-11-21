@@ -1,16 +1,21 @@
 <script setup>
-    import { onMounted } from 'vue'
+    import { watchEffect, watch } from 'vue'
     import Posts from './Posts.vue'
     import Status from './Status.vue';
     import { homePost } from '../main.js';
     import { getPosts } from '../Api/HomePostAPI.js'
+    import { profile} from '../main.js'
 
     // Get posts
 
-    onMounted(() => {
-         getPosts()
+    watchEffect(() => {
+        getPosts()
     })
 
+    watch(profile, () => {
+        getPosts()
+    })
+    
 </script>
 
 <template>
@@ -21,7 +26,7 @@
         <!-- Posts -->
         <Posts v-if="homePost.posts.length" :posts="homePost.posts"/>
         <article v-else class="w-[510px] mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
-            NO POSTS
+            You currently have no posts to view, follow someone to know about theirs or create your own.
         </article>
     </div>
 </template>

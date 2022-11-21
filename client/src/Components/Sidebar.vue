@@ -8,7 +8,7 @@
 <div className="space-y-2 min-w-max max-w-lg lg:w-[220px]">
     <!-- {/* Top */} -->
     <div
-        className="bg-white rounded-lg overflow-hidden relative flex flex-col items-center text-center border border-gray-300 dark:border-none">
+        className="bg-white rounded-lg overflow-hidden relative flex flex-col items-center text-center border border-gray-300">
         <div className="relative w-full h-14 bg-blue-100">
         </div>
         <img @click="router.push({ name: 'profile-page', params:{_id: auth.user._id} })"

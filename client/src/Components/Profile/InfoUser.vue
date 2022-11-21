@@ -30,7 +30,7 @@
                 alt="">
             <p class="font-semibold">{{ user?.fullname }}</p>
             <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
-                <img src="../../assets/images/message.png" width="30">
+                <img src="../../assets/images/id-card.png" width="30">
                 <p class="pl-2">{{ user?.username }}</p>
             </div>
         </div>

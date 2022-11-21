@@ -2,6 +2,7 @@
     import Header from './Components/Header.vue'
     import Alert from './Components/Alert/Alert.vue';
     import { auth } from './main.js';
+
 </script>
 
 <template>

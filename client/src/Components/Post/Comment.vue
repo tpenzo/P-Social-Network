@@ -99,7 +99,7 @@
             </div>
             <div class="relative" v-if="show">
                 <img @click="showFuncCmt = !showFuncCmt" class="cursor-pointer" src="../../assets/images/more.png" width="35">
-                <div v-if="showFuncCmt" @click="showFuncCmt = !showFuncCmt"
+                <div v-click-outside="() => { showFuncCmt = !showFuncCmt }" v-if="showFuncCmt"
                     class="absolute drop-shadow-lg right-0 z-20 w-36 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
                     <button v-if="auth.user._id === props.comment.user._id" @click="showInputEdit = !showInputEdit"
                         class=" px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transformhover:bg-gray-100 hover:bg-gray-100 hover:w-full">

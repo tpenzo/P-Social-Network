@@ -35,7 +35,7 @@
 
 </script>
 <template>
-   <div class="status_modal">
+   <div class="status_modal animate__fadeIn animate__animated">
          <form @submit.prevent="handleSubmit">
             <div class="status_header">
                <h5 class="m-0">Create Post</h5>

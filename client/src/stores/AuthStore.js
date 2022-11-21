@@ -10,7 +10,9 @@ export const AuthStore = defineStore('authStore', {
          this.posts = posts;
       },
       resert() {
-         (this.token = null), (this.user = null);
+         this.token = null;
+         this.user = null;
+         this.posts = [];
       },
       updateUser(user) {
          this.user = { ...this.user, ...user };

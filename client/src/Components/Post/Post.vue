@@ -40,7 +40,7 @@
     }
 
     const fullname = computed(() => {
-        return `${props.post.user?.lastname} ${props.post.user?.firstname}`
+        return `${props.post.user?.firstname} ${props.post.user?.lastname}`
     })
     
 </script>
@@ -49,23 +49,25 @@
             class="w-full mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
             <div class="flex pb-4 items-center justify-between">
                 <div class="flex w-full justify-between">
-                    <div>
-                        <a class="inline-block mr-4" href="#">
-                            <img class="rounded-full max-w-none w-12 h-12" :src="post.user.avatar" />
-                        </a>
-                        <div class="flex flex-col">
-                            <div>
-                                <a class="inline-block text-lg font-bold" href="#">{{ fullname }}</a>
-                            </div>
-                            <div class="text-slate-500">
-                                {{ moment(post.createdAt).fromNow() }}
+                    <router-link :to="{ name: 'profile-page', params: { _id: post.user._id }}">
+                        <div>
+                            <a class="inline-block mr-4" href="#">
+                                <img class="rounded-full max-w-none w-12 h-12" :src="post.user.avatar" />
+                            </a>
+                            <div class="flex flex-col">
+                                <div>
+                                    <a class="inline-block text-lg font-bold" href="#">{{ fullname }}</a>
+                                </div>
+                                <div class="text-slate-500">
+                                    {{ moment(post.createdAt).fromNow() }}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
 
-                    <div v-if="props.post.user._id === auth.user._id" class="relative">
+                    <div  v-if="props.post.user._id === auth.user._id" class="relative">
                         <img @click="showFuncPost = !showFuncPost" class="cursor-pointer" src="../../assets/images/more.png" width="35">
-                        <div v-if="showFuncPost" @click="showFuncPost = !showFuncPost"
+                        <div v-click-outside="() => { showFuncPost = false }" v-if="showFuncPost" @click="showFuncPost = !showFuncPost"
                             class="absolute drop-shadow-lg right-0 z-20 w-36 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
                             <button @click="showModalEdit = !showModalEdit"
                                 class=" px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transformhover:bg-gray-100 hover:bg-gray-100 hover:w-full">

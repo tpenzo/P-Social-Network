@@ -1,6 +1,6 @@
 <script setup>
     import UserCard from './UserCard.vue';
-    import { reactive, ref, watch} from 'vue'
+    import { reactive, ref, watch, computed } from 'vue'
     import axiosClient from '../Api/axiosClient';
     
     const searchInput = ref('')
@@ -11,8 +11,9 @@
     watch(searchInput, () => {
        const callSearchAPI = async () => {
             try {
+                const [firstname, lastname] = searchInput.value.split(' ');
                 // Call API
-                const res = await axiosClient.get(`/api/user/search?username=${searchInput.value}`)
+                const res = await axiosClient.get(`/api/user/search?firstname=${firstname}&lastname=${lastname}`)
                 // Change data
                 users.data = res.users
                 showResult.value = true
@@ -28,8 +29,6 @@
             showResult.value = false
         }
     })
-    
-
 </script>
 <template>
     <div className="space-x-1 py-2.5 px-4 rounded w-full">
@@ -46,7 +45,8 @@
             </div>
         </form>
         <!-- Search result -->
-        <div v-if="showResult" @click="showResult =! showResult"
+        <div v-click-outside="() => { showResult = false }
+            " v-if="showResult" @click="showResult =! showResult"
             class="absolute top-[50px]  z-20 w-[250px] py-2 mt-4 drop-shadow-lg overflow-hidden bg-white rounded-md shadow-xl">
             <div v-if="users.data.length">
                 <div v-for="(user, index) in users.data" :key="user._id">

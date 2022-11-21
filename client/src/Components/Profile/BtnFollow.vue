@@ -28,12 +28,12 @@
 
 <template>
     <button v-if="followed" @click="unFollow()"
-            class="flex marker:items-center py-2 px-4 text-sm bg-red-500 shadow-lg">
+            class="flex marker:items-center py-2 px-4 text-sm bg-red-500 shadow-lg rounded-[5px]">
         <img src="../../assets/images/delete-friend.png" width="19">
         <p class="ml-1">Unfollow</p>
     </button>
     <button v-else  @click="follow()"
-            class="flex marker:items-center py-2 px-4 text-sm bg-blue-500 shadow-lg">
+            class="flex marker:items-center py-2 px-4 text-sm bg-blue-500 shadow-lg rounded-[5px]">
         <img src="../../assets/images/add.png" width="19">
         <p class="ml-1">Follow</p>
     </button>

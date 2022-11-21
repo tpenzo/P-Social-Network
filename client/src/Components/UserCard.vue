@@ -2,6 +2,10 @@
     import { defineProps } from 'vue'
     const props = defineProps({ user: Object, avatar: String })
 
+    const fullname = (firstname, lastname) => {
+        return `${firstname} ${lastname}`
+    }
+
 </script>
 
 <template >
@@ -11,7 +15,7 @@
             :src="avatar"
             alt="jane avatar">
         <div class="mx-1">
-            <h1 class="text-sm font-semibold text-gray-70">{{ user.username }}</h1>
+            <h1 class="text-sm font-semibold text-gray-70">{{ fullname(user.firstname, user.lastname) }}</h1>
             <p class="text-sm text-gray-500">{{ user.email }}</p>
         </div>
     </router-link>

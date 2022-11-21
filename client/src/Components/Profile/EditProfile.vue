@@ -53,7 +53,7 @@
 </script>
 
 <template>
-    <div class="edit_profile">
+    <div class="edit_profile animate__fadeIn animate__animated">
         <Form :initial-values = "{
            firstname: props.user.firstname,
            lastname: props.user.lastname,

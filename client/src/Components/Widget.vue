@@ -25,24 +25,17 @@
     
             <div v-for="(user, index) in userSuggestion.users" :key="index"  className="space-y-1">
                 <div className="flex space-x-2 items-center justify-around cursor-pointer hover:bg-black/10 px-2.5 py-1">
-                    <a href="#"
-                        class="flex lg:w-[250px] items-center py-3 pr-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform">
-                        <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-                            :src="user.avatar"
-                            alt="jane avatar">
+                    <router-link :to="{ name: 'profile-page', params: { _id: user._id }}" class="flex lg:w-[250px] items-center py-3 pr-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform">
+                        <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" :src="user.avatar" alt="jane avatar">
                         <div class="mx-1">
                             <h1 class="text-sm font-semibold text-gray-700">{{ fulname(user.firstname, user.lastname) }}</h1>
                             <p class="text-sm text-gray-500">{{user.email}}</p>
                         </div>
-                    </a>
-                    <!-- <button
-                        class="ml-5 flex items-center p-2 text-sm text-gray-600 bg-white border rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
-                        <span class="mx-1">Follow</span>
-                        <img src="@/assets/images/add.png" width="20">
-                    </button> -->
+                    </router-link>
                     <BtnFollow :_id= "user._id"/>
                 </div>
             </div>
+            
         </div>
         <!-- {/* Ads */} -->
         <div className="bg-white w-11/11 h-64 px-2.5 rounded-lg sticky top-20 border border-gray-300">

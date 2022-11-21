@@ -26,11 +26,11 @@
 <template>
 <div>
     <Form @submit="handleLogin()" :validation-schema="formLoginValidation" class="mt-[150px] flex bg-white rounded-lg shadow-2xl overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
-        <div class="hidden lg:block lg:w-1/2 bg-cover"
-            style="background-image:url('https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHNvY2lhbCUyMG1lZGlhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=80')">
+        <div class="hidden lg:block lg:w-1/2 bg-cover animate__slideInLeft animate__animated"
+            style="background-image:url('https://res.cloudinary.com/dykgq5bav/image/upload/v1668917211/P-Social%20Network/bsnod0wi3emzi7atvi17.avif')">
         </div>
-        <div class="w-full p-8 lg:w-1/2">
-            <h2 class="text-2xl font-semibold  text-center">APP MEDIA</h2>
+        <div class="w-full p-8 lg:w-1/2 animate__slideInRight animate__animated" >
+            <h2 class="text-2xl font-semibold  text-center animate__animated animate__bounce">P-Social Network</h2>
             <p class="mt-2 text-sm text-gray-600 text-center"> >-- Welcome back --> </p>
             <div class="mt-4">
                 <label class="lableField">Username</label>
@@ -41,7 +41,6 @@
             <div class="mt-4">
                 <div class="flex justify-between">
                     <label class="lableField">Password</label>
-                    <a href="#" class="text-xs text-gray-500">Forget Password ?</a>
                 </div>
                 <Field
                     class="inputField"

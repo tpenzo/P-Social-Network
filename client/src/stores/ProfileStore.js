@@ -13,6 +13,9 @@ export const ProfileStore = defineStore('profileStore', {
       updatePost(_id, postUpdate) {
          this.posts = this.posts.map((post) => (post._id === _id ? postUpdate : post));
       },
+      resert() {
+         (this.posts = []), (this.user = null);
+      },
    },
    getters: {
       fullName() {
