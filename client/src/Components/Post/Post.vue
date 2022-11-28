@@ -91,7 +91,7 @@
             </p>
             <div v-if="post.images.length" class="py-4">
                 <a class="flex" href="#">
-                    <img class="max-w-full rounded-br-lg"
+                    <img class="max-w-full rounded-lg"
                         :src="post.images[0]" />
                 </a>
             </div>

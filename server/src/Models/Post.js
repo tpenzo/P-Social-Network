@@ -1,3 +1,4 @@
+
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
@@ -14,3 +15,5 @@ const PostModel = new Schema(
 );
 
 export default mongoose.model('post', PostModel);
+
+

@@ -1,3 +1,4 @@
+
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
@@ -13,3 +14,4 @@ const CommentModel = new Schema(
 );
 
 export default mongoose.model('comment', CommentModel);
+

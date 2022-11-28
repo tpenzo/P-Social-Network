@@ -31,7 +31,7 @@
     })
 </script>
 <template>
-    <div className="space-x-1 py-2.5 px-4 rounded w-full">
+    <div className="hidden sm:flex space-x-1 py-2.5 px-4 rounded w-full">
         <!-- Search input -->
         <form class="relative">
             <label for="voice-search" class="sr-only">Search</label>

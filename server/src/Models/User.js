@@ -1,3 +1,4 @@
+
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
@@ -27,3 +28,8 @@ const UserModel = new Schema(
 );
 
 export default mongoose.model('user', UserModel);
+
+
+
+
+

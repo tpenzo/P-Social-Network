@@ -25,7 +25,7 @@
             <router-link :to="{name: 'home-page'}">
                 <div class="flex justify-around mr-5">
                     <img src="@/assets/images/social-media.png" width="45" height="50" />
-                    <h1 class="text-black font-bold ml-3">
+                    <h1 class="pt-3 md:pt-0 text-black font-bold ml-3">
                         <span class="font-light">P-Social</span> Network
                     </h1>
                 </div>
@@ -34,9 +34,9 @@
             <Search/>
         </div>
         <!-- Right -->
-        <div className="hidden md:flex items-center space-x-1 text-black">
+        <div className="md:flex items-center space-x-1 text-black">
             <!-- Nav link -->
-            <div class="mr-3 flex-grow-0 items-center">
+            <div class="hidden lg:flex mr-3 flex-grow-0 items-center">
                 <a href="#">
                     <img class="inline" src="@/assets/images/writing.png" width="20" /> Message
                 </a>
@@ -47,10 +47,10 @@
                     <img class="inline" src="@/assets/images/bell.png" width="20" /> Notify
                 </a>
             </div>
-            <div class="inline relative drop-shadow-lg">
+            <div class="inline relative drop-shadow-lg flex-grow-0 items-center">
                 <!-- Btn show -->
                 <button @click="showDropdown = !showDropdown"
-                    class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border rounded-md focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
+                    class="relative top-[-15px] md:top-[0px] z-10 flex items-center p-2 text-sm text-gray-600 bg-white border rounded-md focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
                     <span class="mx-1">{{auth.fullName}}</span>
                     <img class="inline ml-1" src="@/assets/images/down-chevron.png" width="15" />
                 </button>
@@ -71,7 +71,7 @@
                     <button @click="handleLogout()"
                         class="w-full block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
                         <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
-                            <img src="../assets/images/logout.png" width="25" />
+                            <img class="ml-[15px]" src="../assets/images/logout.png" width="25" />
                             <span class="ml-2">Sign Out</span>
                         </div>
                     </button>

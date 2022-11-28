@@ -20,6 +20,15 @@ class AuthCtrl {
                   { _id: user._id, role: user.role },
                   '500s'
                );
+               const refreshToken = token.refresh(
+                  { _id: user._id, role: user.role },
+                  '400s'
+               );
+               res.cookie('refreshToken', refreshToken, {
+                  httpOnly: true,
+                  path: '/auth/refresh_token',
+                  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+               });
                // Get posts of userLogin
                const posts = await PostModel.find({
                   user: user._id,
@@ -57,7 +66,6 @@ class AuthCtrl {
    async logout(req, res) {
       try {
          res.clearCookie('refreshToken');
-         console.log("This is kkkk")
          return res.status(200).json({ message: 'Logout success' });
       } catch (error) {
          return res.status(500).json({ message: error.message, error });

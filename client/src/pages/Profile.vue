@@ -51,8 +51,8 @@
             <Status v-if="route.params._id === auth.user._id"/>
 
             <Posts v-if="posts.data?.length" :posts="posts.data"/>
-            <div v-else class="w-[510px] mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border">
-                NO POSTS
+            <div v-else class="w-[510px] mb-4 break-inside p-6 rounded-xl bg-white flex flex-col bg-clip-border items-center">
+                There are currently no posts 😊
             </div>
         </div>
     </div>
