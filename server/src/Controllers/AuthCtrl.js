@@ -18,11 +18,11 @@ class AuthCtrl {
                // Create token and store refresh_token in cookie
                const accessToken = token.access(
                   { _id: user._id, role: user.role },
-                  '500s'
+                  '1800s'
                );
                const refreshToken = token.refresh(
                   { _id: user._id, role: user.role },
-                  '400s'
+                  '3600s'
                );
                res.cookie('refreshToken', refreshToken, {
                   httpOnly: true,
