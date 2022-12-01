@@ -4,7 +4,7 @@
     const props = defineProps({posts: Array})
 </script>
 <template>
-    <div v-for="post in posts" :key="post.id">
+    <div class="w-[510px]" v-for="post in posts" :key="post.id">
         <Post :post="post"/>
     </div>
 </template>

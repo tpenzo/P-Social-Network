@@ -21,7 +21,6 @@ export const createPost = async (image, content) => {
          images: [img.url],
          content,
       });
-
       // Update
       homePost.addPost(res.newPost);
       auth.addPost(res.newPost);

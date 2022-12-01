@@ -6,7 +6,6 @@
     const props = defineProps({_id: String})
     const followed = ref(false)
 
-
     watchEffect(() => {
         if (auth.user.following.find((item) => item._id === props._id)){
             followed.value = true
@@ -22,7 +21,6 @@
         unFollowUser(props._id)
         followed.value = false
     }
-
 
 </script>
 

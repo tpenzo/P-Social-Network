@@ -11,7 +11,6 @@ export const getProfileUser = async (_id) => {
       const res = await axiosClient.get(`/api/user/${_id}`);
       // Update store Profile
       profile.getUser(res.user, res.posts); // update user and posts
-      console.log(profile.user);
       // Success
       alert.refreshAlert();
    } catch (error) {

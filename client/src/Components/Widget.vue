@@ -1,12 +1,17 @@
 <script setup>
     import { getSuggestions } from '../stores/SuggestionStore.js'
-    import { watchEffect } from 'vue'
+    import { watchEffect, reactive } from 'vue'
     import { userSuggestion } from '../main.js'
     import BtnFollow from './Profile/BtnFollow.vue';
+    import { auth } from '../main.js'
+
+    const userSugg = reactive({data:[]})
 
     watchEffect(async () => {
         await getSuggestions()
+        userSugg.data = userSuggestion.users
     })
+
 
     const fulname = (firstname, lastname) => {
         return `${firstname} ${lastname}`
@@ -23,7 +28,7 @@
                 <InfoRoundedIcon className="h-5 w-5" />
             </div>
     
-            <div v-for="(user, index) in userSuggestion.users" :key="index"  className="space-y-1">
+            <div v-for="(user, index) in userSugg.data" :key="index"  className="space-y-1">
                 <div className="flex space-x-2 items-center justify-around cursor-pointer hover:bg-black/10 px-2.5 py-1">
                     <router-link :to="{ name: 'profile-page', params: { _id: user._id }}" class="flex lg:w-[250px] items-center py-3 pr-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform">
                         <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" :src="user.avatar" alt="jane avatar">
